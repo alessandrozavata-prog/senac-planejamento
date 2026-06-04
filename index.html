@@ -157,7 +157,7 @@ textarea{min-height:150px;line-height:1.6}
     </div>
     <div class="fw">
       <label class="fl">Ou cole aqui o texto do Plano de Curso (Ctrl+V)</label>
-      <textarea id="po" style="min-height:160px" placeholder="Cole o texto do P.O. aqui (Ctrl+V) ou arraste um arquivo .txt / .pdf / .docx" onpaste="setTimeout(atualizarContador,50)" oninput="atualizarContador()" onkeyup="atualizarContador()" ondrop="onDropTA(event)" ondragover="event.preventDefault()"></textarea>
+      <textarea id="po" style="min-height:160px" placeholder="Cole o texto do P.O. aqui (Ctrl+V) ou arraste um arquivo .txt / .pdf / .docx"></textarea>
       <div class="al ali" style="margin-top:8px;padding:8px 12px">
         <i class="ti ti-info-circle"></i>
         <div style="font-size:13px">Clique na caixa acima e use <strong>Ctrl+V</strong> para colar o texto do P.O.</div>
@@ -1260,24 +1260,36 @@ function lerDOCX(file){
 
 // ──────────────────────────────────────────────────
 
-// MutationObserver como última tentativa - observa mudanças no DOM
-try {
-  var poEl = document.getElementById('po');
-  if(poEl) {
-    // Polling simples a cada 500ms - mais confiável que eventos em file://
-    setInterval(function(){
-      var v = poEl.value || poEl.textContent || '';
-      if(v !== A.po && v.length > 0) {
-        A.po = v.trim();
-        var cc = document.getElementById('cc');
-        if(cc){ 
-          cc.textContent = A.po.length.toLocaleString() + ' caracteres'; 
-          cc.style.color = A.po.length > 500 ? 'var(--stx)' : 'var(--or)';
-        }
-      }
-    }, 500);
+// Attach all events to textarea after DOM loads
+document.addEventListener('DOMContentLoaded', function(){
+  var po = document.getElementById('po');
+  if(!po) return;
+  
+  function sync(){
+    setTimeout(function(){
+      atualizarContador();
+    }, 30);
   }
-} catch(e){}
+  
+  po.addEventListener('input',   sync);
+  po.addEventListener('change',  sync);
+  po.addEventListener('keyup',   sync);
+  po.addEventListener('paste',   sync);
+  po.addEventListener('cut',     sync);
+  po.addEventListener('drop',    sync);
+  po.addEventListener('blur',    sync);
+  po.addEventListener('focus',   sync);
+  
+  // Poll every 300ms as ultimate fallback
+  setInterval(function(){
+    var v = po.value || '';
+    var cc = document.getElementById('cc');
+    if(cc && v.length > 0){
+      cc.textContent = v.length.toLocaleString() + ' caracteres';
+      cc.style.color = v.length > 500 ? 'var(--stx)' : 'var(--or)';
+    }
+  }, 300);
+});
 </script>
 </body>
 </html>
