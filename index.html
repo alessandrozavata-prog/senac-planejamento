@@ -607,28 +607,36 @@ function parsearAulas(txt){
 
 async function gerarWordBrowser(aulas,D){
   var AZ='1F3864',OR='E05A1A',CZ='D6DCE4',CZ2='F2F2F2',BR='FFFFFF';
-  var brd=function(c,s){return{style:D.BorderStyle.SINGLE,size:s||4,color:c||'AAAAAA'};};
+  // Use string literals for cross-version compatibility
+  var SINGLE=D.BorderStyle?D.BorderStyle.SINGLE:'single';
+  var LEFT=D.AlignmentType?D.AlignmentType.LEFT:'left';
+  var CENTER=D.AlignmentType?D.AlignmentType.CENTER:'center';
+  var DXA=D.WidthType?D.WidthType.DXA:'dxa';
+  var CLEAR=D.ShadingType?D.ShadingType.CLEAR:'clear';
+  var TOP=D.VerticalAlign?D.VerticalAlign.TOP:'top';
+  var LANDSCAPE=D.PageOrientation?D.PageOrientation.LANDSCAPE:'landscape';
+  var brd=function(c,s){return{style:SINGLE,size:s||4,color:c||'AAAAAA'};};
   var brdN={top:brd(),bottom:brd(),left:brd(),right:brd()};
   var brdA={top:brd(AZ,8),bottom:brd(AZ,8),left:brd(AZ,8),right:brd(AZ,8)};
   var tx=function(t,o){o=o||{};return new D.TextRun({text:t||'',bold:o.b,size:o.s||22,font:'Arial',color:o.c||'000000',italics:o.i});};
-  var pr=function(t,o){o=o||{};return new D.Paragraph({children:[tx(t,o)],alignment:o.al||D.AlignmentType.LEFT,spacing:{before:o.sb||60,after:o.sa||60}});};
-  var cl=function(ch,o){o=o||{};return new D.TableCell({borders:o.brd||brdN,width:o.w?{size:o.w,type:D.WidthType.DXA}:undefined,columnSpan:o.sp||1,shading:o.bg?{fill:o.bg,type:D.ShadingType.CLEAR}:undefined,margins:{top:80,bottom:80,left:120,right:120},verticalAlign:D.VerticalAlign.TOP,children:Array.isArray(ch)?ch:[ch]});};
-  var secR=function(l,v){return new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[2800,11600],rows:[new D.TableRow({children:[cl(pr(l,{b:true,c:AZ,s:20}),{bg:CZ,w:2800}),cl(pr(v||'',{s:20}),{w:11600})]})]});};
+  var pr=function(t,o){o=o||{};return new D.Paragraph({children:[tx(t,o)],alignment:o.al||LEFT,spacing:{before:o.sb||60,after:o.sa||60}});};
+  var cl=function(ch,o){o=o||{};return new D.TableCell({borders:o.brd||brdN,width:o.w?{size:o.w,type:DXA}:undefined,columnSpan:o.sp||1,shading:o.bg?{fill:o.bg,type:CLEAR}:undefined,margins:{top:80,bottom:80,left:120,right:120},verticalAlign:TOP,children:Array.isArray(ch)?ch:[ch]});};
+  var secR=function(l,v){return new D.Table({width:{size:14400,type:DXA},columnWidths:[2800,11600],rows:[new D.TableRow({children:[cl(pr(l,{b:true,c:AZ,s:20}),{bg:CZ,w:2800}),cl(pr(v||'',{s:20}),{w:11600})]})]});};
   var ch=[];
-  ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[14400],rows:[new D.TableRow({children:[cl([pr('PLANEJAMENTO PEDAGÓGICO SENAC',{b:true,s:32,c:BR,al:D.AlignmentType.CENTER,sb:160,sa:80}),pr(A.cn||'',{b:true,s:26,c:BR,al:D.AlignmentType.CENTER,sb:0,sa:60}),pr(A.sun||'',{s:22,c:BR,al:D.AlignmentType.CENTER,sb:0,sa:160})],{bg:AZ,brd:brdA,w:14400})]})]},),pr(''));
+  ch.push(new D.Table({width:{size:14400,type:DXA},columnWidths:[14400],rows:[new D.TableRow({children:[cl([pr('PLANEJAMENTO PEDAGÓGICO SENAC',{b:true,s:32,c:BR,al:CENTER,sb:160,sa:80}),pr(A.cn||'',{b:true,s:26,c:BR,al:CENTER,sb:0,sa:60}),pr(A.sun||'',{s:22,c:BR,al:CENTER,sb:0,sa:160})],{bg:AZ,brd:brdA,w:14400})]})]},),pr(''));
   aulas.forEach(function(aula,idx){
     ch.push(new D.Paragraph({children:[new D.PageBreak()]}));
-    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[14400],rows:[new D.TableRow({children:[cl([pr('AULA '+(idx+1)+' de '+aulas.length+'  |  '+(aula.titulo||''),{b:true,s:26,c:BR,al:D.AlignmentType.CENTER,sb:120,sa:60}),pr(A.sun||'',{s:20,c:BR,al:D.AlignmentType.CENTER,sb:0,sa:120})],{bg:AZ,brd:brdA,w:14400})]})]},),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:DXA},columnWidths:[14400],rows:[new D.TableRow({children:[cl([pr('AULA '+(idx+1)+' de '+aulas.length+'  |  '+(aula.titulo||''),{b:true,s:26,c:BR,al:CENTER,sb:120,sa:60}),pr(A.sun||'',{s:20,c:BR,al:CENTER,sb:0,sa:120})],{bg:AZ,brd:brdA,w:14400})]})]},),pr(''));
     if(aula.situacao)ch.push(secR('Situação de Aprendizagem',aula.situacao),pr(''));
-    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[2880,2880,2880,2880,2880],rows:[new D.TableRow({children:[cl(pr('CH',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Modalidade',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Metodologia',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Indicadores',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Produto',{b:true,s:20,c:BR}),{bg:OR})]}),new D.TableRow({children:[cl(pr(aula.ch||'',{s:20}),{bg:CZ2}),cl(pr(aula.modalidade||'',{s:20}),{bg:CZ2}),cl(pr(aula.metodologia||'',{s:19}),{bg:CZ2}),cl(pr(aula.indicadores||'',{s:20}),{bg:CZ2}),cl(pr(aula.produto||'',{s:19}),{bg:CZ2})]})]}),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:DXA},columnWidths:[2880,2880,2880,2880,2880],rows:[new D.TableRow({children:[cl(pr('CH',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Modalidade',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Metodologia',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Indicadores',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Produto',{b:true,s:20,c:BR}),{bg:OR})]}),new D.TableRow({children:[cl(pr(aula.ch||'',{s:20}),{bg:CZ2}),cl(pr(aula.modalidade||'',{s:20}),{bg:CZ2}),cl(pr(aula.metodologia||'',{s:19}),{bg:CZ2}),cl(pr(aula.indicadores||'',{s:20}),{bg:CZ2}),cl(pr(aula.produto||'',{s:19}),{bg:CZ2})]})]}),pr(''));
     if(aula.objetivo)ch.push(secR('Objetivo',aula.objetivo),pr(''));
-    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[4800,4800,4800],rows:[new D.TableRow({children:[cl(pr('Conhecimentos',{b:true,s:20,c:BR}),{bg:AZ}),cl(pr('Habilidades',{b:true,s:20,c:BR}),{bg:AZ}),cl(pr('Atitudes',{b:true,s:20,c:BR}),{bg:AZ})]}),new D.TableRow({children:[cl(pr(aula.conhecimentos||'',{s:19}),{bg:CZ2}),cl(pr(aula.habilidades||'',{s:19}),{bg:CZ2}),cl(pr(aula.atitudes||'',{s:19}),{bg:CZ2})]})]}),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:DXA},columnWidths:[4800,4800,4800],rows:[new D.TableRow({children:[cl(pr('Conhecimentos',{b:true,s:20,c:BR}),{bg:AZ}),cl(pr('Habilidades',{b:true,s:20,c:BR}),{bg:AZ}),cl(pr('Atitudes',{b:true,s:20,c:BR}),{bg:AZ})]}),new D.TableRow({children:[cl(pr(aula.conhecimentos||'',{s:19}),{bg:CZ2}),cl(pr(aula.habilidades||'',{s:19}),{bg:CZ2}),cl(pr(aula.atitudes||'',{s:19}),{bg:CZ2})]})]}),pr(''));
     var dev=aula.desenvolvimento||{};
-    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[3200,11200],rows:[new D.TableRow({children:[cl(pr('DESENVOLVIMENTO',{b:true,s:22,c:BR,al:D.AlignmentType.CENTER}),{bg:AZ,sp:2})]})].concat([['Acolhimento (15 min)',dev.acolhimento],['Mobilização (20 min)',dev.mobilizacao],['Desenvolvimento',dev.desenvolvimento],['Prática',dev.pratica],['Sistematização (20 min)',dev.sistematizacao],['Encerramento (15 min)',dev.encerramento]].map(function(r){return new D.TableRow({children:[cl(pr(r[0],{b:true,s:20,c:AZ}),{bg:CZ,w:3200}),cl(pr(r[1]||'',{s:20}),{w:11200})]});}))},),pr(''));
-    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[4800,4800,4800],rows:[new D.TableRow({children:[cl(pr('Evidências',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Critérios',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Instrumentos',{b:true,s:20,c:BR}),{bg:OR})]}),new D.TableRow({children:[cl(pr(aula.evidencias||'',{s:19}),{bg:CZ2}),cl(pr(aula.criterios||'',{s:19}),{bg:CZ2}),cl(pr(aula.instrumentos||'',{s:19}),{bg:CZ2})]})]}),pr(''));
-    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[7200,7200],rows:[new D.TableRow({children:[cl([pr('Orientações ao Docente',{b:true,s:20,c:AZ}),pr(aula.orientacoes||'',{s:19})],{bg:CZ2}),cl([pr('Perguntas para Reflexão',{b:true,s:20,c:AZ}),pr(aula.reflexao||'',{s:19})],{bg:CZ2})]})]}),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:DXA},columnWidths:[3200,11200],rows:[new D.TableRow({children:[cl(pr('DESENVOLVIMENTO',{b:true,s:22,c:BR,al:CENTER}),{bg:AZ,sp:2})]})].concat([['Acolhimento (15 min)',dev.acolhimento],['Mobilização (20 min)',dev.mobilizacao],['Desenvolvimento',dev.desenvolvimento],['Prática',dev.pratica],['Sistematização (20 min)',dev.sistematizacao],['Encerramento (15 min)',dev.encerramento]].map(function(r){return new D.TableRow({children:[cl(pr(r[0],{b:true,s:20,c:AZ}),{bg:CZ,w:3200}),cl(pr(r[1]||'',{s:20}),{w:11200})]});}))},),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:DXA},columnWidths:[4800,4800,4800],rows:[new D.TableRow({children:[cl(pr('Evidências',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Critérios',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Instrumentos',{b:true,s:20,c:BR}),{bg:OR})]}),new D.TableRow({children:[cl(pr(aula.evidencias||'',{s:19}),{bg:CZ2}),cl(pr(aula.criterios||'',{s:19}),{bg:CZ2}),cl(pr(aula.instrumentos||'',{s:19}),{bg:CZ2})]})]}),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:DXA},columnWidths:[7200,7200],rows:[new D.TableRow({children:[cl([pr('Orientações ao Docente',{b:true,s:20,c:AZ}),pr(aula.orientacoes||'',{s:19})],{bg:CZ2}),cl([pr('Perguntas para Reflexão',{b:true,s:20,c:AZ}),pr(aula.reflexao||'',{s:19})],{bg:CZ2})]})]}),pr(''));
   });
-  var doc=new D.Document({styles:{default:{document:{run:{font:'Arial',size:22}}}},sections:[{properties:{page:{size:{width:16838,height:11906},margin:{top:720,right:720,bottom:720,left:720},orientation:D.PageOrientation.LANDSCAPE}},children:ch}]});
+  var doc=new D.Document({styles:{default:{document:{run:{font:'Arial',size:22}}}},sections:[{properties:{page:{size:{width:16838,height:11906},margin:{top:720,right:720,bottom:720,left:720},orientation:LANDSCAPE}},children:ch}]});
   var blob=await D.Packer.toBlob(doc);
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a');
