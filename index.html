@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-:root{--or:#E05A1A;--orl:#FDF0E8;--ord:#B84A12;--bg:#F7F6F3;--sv:#FFF;--sv2:#F3F2EF;--bd:rgba(0,0,0,0.1);--bds:rgba(0,0,0,0.2);--tx:#1A1917;--tx2:#5C5B58;--tx3:#9C9B98;--sbg:#EAF3DE;--stx:#3B6D11;--ibg:#E6F1FB;--itx:#185FA5;--wbg:#FAEEDA;--wtx:#854F0B;--r:10px;--rl:14px}
+:root{--or:#E05A1A;--orl:#FDF0E8;--ord:#B84A12;--bg:#F7F6F3;--sv:#FFF;--sv2:#F3F2EF;--bd:rgba(0,0,0,0.1);--bds:rgba(0,0,0,0.18);--tx:#1A1917;--tx2:#5C5B58;--tx3:#9C9B98;--sbg:#EAF3DE;--stx:#3B6D11;--ibg:#E6F1FB;--itx:#185FA5;--wbg:#FAEEDA;--wtx:#854F0B;--r:10px;--rl:14px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:15px;line-height:1.6}
 .shell{display:flex;min-height:100vh}
@@ -16,7 +16,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 .sbrand{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid var(--bd)}
 .slogo{width:44px;height:44px;background:var(--or);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
 .slogo i{color:#fff;font-size:22px}
-.snm{font-size:15px;font-weight:600;color:var(--tx);line-height:1.3}
+.snm{font-size:15px;font-weight:600;color:var(--tx)}
 .ssub{font-size:12px;color:var(--tx3);margin-top:2px}
 .snav{padding:1rem .75rem;flex:1}
 .nlbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);padding:0 .5rem;margin-bottom:6px;margin-top:1rem;display:block}
@@ -33,36 +33,31 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 .pan{display:none}
 .pan.act{display:block}
 .ph{margin-bottom:2rem}
-.ph h1{font-size:22px;font-weight:600;color:var(--tx);line-height:1.3}
+.ph h1{font-size:22px;font-weight:600;color:var(--tx)}
 .ph p{font-size:14px;color:var(--tx2);margin-top:5px}
 .card{background:var(--sv);border:1px solid var(--bd);border-radius:var(--rl);padding:1.25rem 1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .ct{font-size:14px;font-weight:600;color:var(--tx);display:flex;align-items:center;gap:8px;margin-bottom:1rem}
 .ct i{color:var(--or);font-size:17px}
 .fw{margin-bottom:1.1rem}
 .fl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--tx2);margin-bottom:6px;display:block}
-input,select,textarea{width:100%;font-family:'Inter',sans-serif;font-size:14px;color:var(--tx);background:var(--sv);border:1.5px solid var(--bds);border-radius:var(--r);padding:9px 12px;outline:none;transition:border-color .15s,box-shadow .15s;resize:vertical}
-input:focus,select:focus,textarea:focus{border-color:var(--or);box-shadow:0 0 0 3px rgba(224,90,26,.12)}
-textarea{min-height:150px;line-height:1.6}
-.hint{font-size:12px;color:var(--tx3);margin-top:4px}
+input,select{width:100%;font-family:'Inter',sans-serif;font-size:14px;color:var(--tx);background:var(--sv);border:1.5px solid var(--bds);border-radius:var(--r);padding:9px 12px;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:var(--or)}
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .br{display:flex;gap:10px;margin-top:1.5rem;align-items:center;flex-wrap:wrap}
 .bp{background:var(--or);color:#fff;border:none;border-radius:var(--r);padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:8px;transition:background .15s;box-shadow:0 1px 4px rgba(224,90,26,.3)}
 .bp:hover{background:var(--ord)}
-.bp:disabled{opacity:.45;cursor:not-allowed}
-.bs{background:var(--sv);color:var(--tx);border:1.5px solid var(--bds);border-radius:var(--r);padding:10px 16px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:8px;transition:background .15s}
+.bs{background:var(--sv);color:var(--tx);border:1.5px solid var(--bds);border-radius:var(--r);padding:10px 16px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:8px}
 .bs:hover{background:var(--sv2)}
-.bsm{background:var(--sv2);color:var(--tx2);border:1px solid var(--bd);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:5px;transition:background .15s}
-.bsm:hover{background:var(--bd)}
+.bsm{background:var(--sv2);color:var(--tx2);border:1px solid var(--bd);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:5px}
 .chinf{font-size:13px;color:var(--tx2);background:var(--orl);border-left:3px solid var(--or);padding:9px 14px;border-radius:0 var(--r) var(--r) 0;margin-top:6px}
 .ucg{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px}
-.ucc{border:1.5px solid var(--bds);border-radius:var(--r);padding:10px 12px;cursor:pointer;transition:border-color .15s,background .15s,transform .1s}
-.ucc:hover{border-color:var(--or);background:var(--orl);transform:translateY(-1px)}
-.ucc.sl{border-color:var(--or);background:var(--orl)}
+.ucc{border:1.5px solid var(--bds);border-radius:var(--r);padding:10px 12px;cursor:pointer;transition:border-color .15s,background .15s}
+.ucc:hover,.ucc.sl{border-color:var(--or);background:var(--orl)}
 .ucn{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3)}
 .ucc.sl .ucn{color:var(--or)}
 .uct{font-size:13px;font-weight:600;color:var(--tx);margin-top:3px;line-height:1.3}
-.uch{font-size:11px;color:var(--tx3);margin-top:5px;display:flex;align-items:center;gap:3px}
+.uch{font-size:11px;color:var(--tx3);margin-top:5px}
 .st{width:100%;border-collapse:collapse;font-size:14px}
 .st td{padding:6px 0;border-bottom:1px solid var(--bd)}
 .st tr:last-child td{border-bottom:none}
@@ -74,17 +69,14 @@ textarea{min-height:150px;line-height:1.6}
 .oh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
 .bsuc{display:inline-flex;align-items:center;gap:5px;background:var(--sbg);color:var(--stx);font-size:12px;font-weight:600;padding:4px 10px;border-radius:100px}
 .ob{background:var(--bg);border:1px solid var(--bd);border-radius:var(--rl);padding:1.5rem;font-size:13.5px;line-height:1.8;color:var(--tx);white-space:pre-wrap;word-break:break-word;max-height:650px;overflow-y:auto;font-family:'Inter',sans-serif}
-.ob::-webkit-scrollbar{width:6px}
-.ob::-webkit-scrollbar-thumb{background:var(--bds);border-radius:3px}
-.ldc{background:var(--sv);border:1px solid var(--bd);border-radius:var(--rl);padding:2.5rem 1.5rem;text-align:center;display:none;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.ldc{background:var(--sv);border:1px solid var(--bd);border-radius:var(--rl);padding:2.5rem 1.5rem;text-align:center;display:none}
 .spw{display:flex;justify-content:center;margin-bottom:1.25rem}
 .sp{width:44px;height:44px;border:3px solid var(--bds);border-top-color:var(--or);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .lt{font-size:16px;font-weight:600;color:var(--tx);margin-bottom:4px}
-.ls{font-size:13px;color:var(--tx2)}
 .pw{background:var(--bd);border-radius:100px;height:5px;margin-top:1.25rem;overflow:hidden}
 .pb{height:5px;background:var(--or);border-radius:100px;transition:width .6s ease}
-.hi{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--bd);border-radius:var(--r);margin-bottom:8px;cursor:pointer;transition:background .15s,border-color .15s;background:var(--sv)}
+.hi{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--bd);border-radius:var(--r);margin-bottom:8px;cursor:pointer;transition:background .15s;background:var(--sv)}
 .hi:hover{border-color:var(--or);background:var(--orl)}
 .hun{font-size:13px;font-weight:600;color:var(--tx)}
 .hmt{font-size:12px;color:var(--tx3);margin-top:2px}
@@ -99,7 +91,21 @@ textarea{min-height:150px;line-height:1.6}
 .akt{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--tx3);font-size:17px;padding:2px}
 .es{text-align:center;padding:2.5rem 1rem;color:var(--tx3);font-size:14px}
 .es i{font-size:32px;display:block;margin-bottom:10px}
-@media(max-width:768px){.shell{flex-direction:column}.side{width:100%;height:auto;position:static}.sbrand{padding:1rem}.snav{display:flex;flex-wrap:wrap;gap:4px;padding:.75rem}.sfoot{display:none}.nlbl{display:none}.ni{font-size:12px;padding:7px 10px}.main{padding:1.5rem 1rem}.r2,.r3{grid-template-columns:1fr}.ckg{grid-template-columns:1fr}.ucg{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}}
+
+/* DROP ZONE */
+.dz{border:2px dashed var(--bds);border-radius:var(--r);padding:1.5rem;text-align:center;cursor:pointer;background:var(--sv2);transition:all .2s;margin-bottom:1rem}
+.dz.over{border-color:var(--or);background:var(--orl)}
+.dz i{font-size:36px;color:var(--or);display:block;margin-bottom:8px}
+
+/* TEXTAREA CUSTOM */
+.po-wrap{border:1.5px solid var(--bds);border-radius:var(--r);overflow:hidden;transition:border-color .15s}
+.po-wrap:focus-within{border-color:var(--or);box-shadow:0 0 0 3px rgba(224,90,26,.1)}
+#po{width:100%;min-height:160px;padding:10px 12px;font-family:'Inter',sans-serif;font-size:14px;color:var(--tx);background:var(--sv);border:none;outline:none;resize:vertical;line-height:1.6}
+.po-footer{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:var(--sv2);border-top:1px solid var(--bd)}
+.cc{font-size:13px;font-weight:600;color:var(--or)}
+.cc.ok{color:var(--stx)}
+
+@media(max-width:768px){.shell{flex-direction:column}.side{width:100%;height:auto;position:static}.sbrand{padding:1rem}.snav{display:flex;flex-wrap:wrap;gap:4px;padding:.75rem}.sfoot{display:none}.nlbl{display:none}.ni{font-size:12px;padding:7px 10px}.main{padding:1.5rem 1rem}.r2,.r3{grid-template-columns:1fr}.ckg{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -120,14 +126,13 @@ textarea{min-height:150px;line-height:1.6}
     <div class="ni" id="nv4" onclick="gp(4)"><i class="ti ti-history"></i> Histórico <span class="bdot" id="hd" style="display:none"></span></div>
     <div class="ni" id="nv5" onclick="gp(5)"><i class="ti ti-key"></i> API Key Gemini</div>
   </div>
-  <div class="sfoot">Banco de Estratégias SENAC SP · 2025</div>
+  <div class="sfoot">Banco de Estratégias SENAC SP · 2026</div>
 </nav>
-
 <main class="main">
 
-<!-- P0: PLANO DE CURSO -->
+<!-- P0 -->
 <div class="pan act" id="p0">
-  <div class="ph"><h1>Plano de Organização (P.O.)</h1><p>Cole o Plano de Curso completo. O mesmo P.O. serve para gerar todas as UCs do curso.</p></div>
+  <div class="ph"><h1>Plano de Organização (P.O.)</h1><p>Arraste o arquivo ou cole o texto. O mesmo P.O. serve para gerar todas as UCs.</p></div>
   <div id="keyWarn"></div>
   <div class="card">
     <div class="ct"><i class="ti ti-building"></i> Identificação do curso</div>
@@ -146,53 +151,47 @@ textarea{min-height:150px;line-height:1.6}
   </div>
   <div class="card">
     <div class="ct"><i class="ti ti-file-text"></i> Conteúdo do P.O.</div>
-
-    <!-- ZONA DE ARRASTAR ARQUIVO -->
-    <div id="dropzone" style="border:2px dashed var(--bds);border-radius:var(--r);padding:1.25rem;text-align:center;cursor:pointer;margin-bottom:1rem;background:var(--sv2);transition:all .2s" onclick="document.getElementById('fileIn').click()" ondragover="dzOver(event)" ondragleave="dzLeave(event)" ondrop="dzDrop(event)">
-      <input type="file" id="fileIn" accept=".txt,.pdf,.docx,.doc" style="display:none" onchange="onFileIn(event)">
-      <i class="ti ti-file-upload" style="font-size:32px;color:var(--or);display:block;margin-bottom:6px"></i>
+    <!-- DROP ZONE -->
+    <div class="dz" id="dz" onclick="document.getElementById('fi').click()" ondragover="dzOv(event)" ondragleave="dzLv(event)" ondrop="dzDp(event)">
+      <input type="file" id="fi" accept=".txt,.pdf,.docx,.doc" style="display:none" onchange="onFi(event)">
+      <i class="ti ti-file-upload"></i>
       <div style="font-size:14px;font-weight:600;color:var(--tx)">Arraste o arquivo aqui ou clique para selecionar</div>
-      <div style="font-size:12px;color:var(--tx3);margin-top:3px">Aceita: .txt · .pdf · .docx</div>
-      <div id="fst" style="margin-top:6px;font-size:13px;font-weight:600;color:var(--stx);display:none"></div>
+      <div style="font-size:12px;color:var(--tx3);margin-top:4px">Aceita: .txt · .pdf · .docx</div>
+      <div id="fst" style="margin-top:6px;font-size:13px;font-weight:600;display:none"></div>
     </div>
-    <div class="fw">
-      <label class="fl">Ou cole aqui o texto do Plano de Curso (Ctrl+V)</label>
-      <textarea id="po" style="min-height:160px" placeholder="Cole o texto do P.O. aqui (Ctrl+V) ou arraste um arquivo .txt / .pdf / .docx"></textarea>
-      <div class="al ali" style="margin-top:8px;padding:8px 12px">
-        <i class="ti ti-info-circle"></i>
-        <div style="font-size:13px">Clique na caixa acima e use <strong>Ctrl+V</strong> para colar o texto do P.O.</div>
-      </div>
-      <div style="display:flex;justify-content:space-between;margin-top:6px;align-items:center">
-        <span class="hint">Mínimo recomendado: 500 caracteres</span>
-        <span style="font-size:13px;font-weight:600" id="cc">0 caracteres</span>
+    <!-- TEXTAREA -->
+    <label class="fl">Ou cole o texto aqui (Ctrl+V)</label>
+    <div class="po-wrap">
+      <textarea id="po" placeholder="Cole o conteúdo completo do P.O. ou Plano de Curso aqui..."></textarea>
+      <div class="po-footer">
+        <span style="font-size:12px;color:var(--tx3)">Mínimo: 500 caracteres</span>
+        <span class="cc" id="cc">0 caracteres</span>
       </div>
     </div>
   </div>
-  <div class="br">
-    <button class="bp" onclick="s0()"><i class="ti ti-arrow-right"></i> Continuar</button>
-  </div>
+  <div class="br"><button class="bp" id="btnCont" onclick="s0()"><i class="ti ti-arrow-right"></i> Continuar</button></div>
 </div>
 
-<!-- P1: ESCOLHER UC -->
+<!-- P1 -->
 <div class="pan" id="p1">
-  <div class="ph"><h1>Escolher Unidade Curricular</h1><p>Selecione a UC que deseja planejar. Volte aqui para gerar outras UCs do mesmo curso.</p></div>
+  <div class="ph"><h1>Escolher Unidade Curricular</h1><p>Selecione a UC. Volte aqui para gerar outras UCs do mesmo curso.</p></div>
   <div class="card">
-    <div class="ct"><i class="ti ti-list-check"></i> UCs detectadas automaticamente</div>
-    <div class="ucg" id="ucg"><div class="es"><i class="ti ti-search-off"></i>Nenhuma UC detectada ainda.</div></div>
+    <div class="ct"><i class="ti ti-list-check"></i> UCs detectadas</div>
+    <div class="ucg" id="ucg"><div class="es"><i class="ti ti-search-off"></i>Nenhuma UC detectada.</div></div>
   </div>
   <div class="card">
     <div class="ct"><i class="ti ti-pencil"></i> Ou descreva manualmente</div>
-    <div class="fw"><textarea id="ucm" style="min-height:90px" placeholder="Use se a UC não foi detectada. Ex:&#10;UC7 – Folha de pagamento | 96h&#10;Indicadores: 1. Organiza documentos... 2. Calcula proventos..." oninput="omi()"></textarea></div>
+    <div class="po-wrap"><textarea id="ucm" style="min-height:90px" placeholder="Ex: UC7 – Folha de pagamento | 96h&#10;Indicadores: 1. Organiza documentos..."></textarea></div>
   </div>
   <div class="br">
     <button class="bs" onclick="gp(0)"><i class="ti ti-arrow-left"></i> Voltar</button>
-    <button class="bp" onclick="s1()"><i class="ti ti-arrow-right"></i> Configurar parâmetros</button>
+    <button class="bp" onclick="s1()"><i class="ti ti-arrow-right"></i> Configurar</button>
   </div>
 </div>
 
-<!-- P2: CONFIGURAR -->
+<!-- P2 -->
 <div class="pan" id="p2">
-  <div class="ph"><h1>Configurar parâmetros</h1><p>Carga horária, duração e perfil da turma. O número de aulas é calculado automaticamente.</p></div>
+  <div class="ph"><h1>Configurar parâmetros</h1><p>Carga horária e perfil da turma. O número de aulas é calculado automaticamente.</p></div>
   <div class="card">
     <div class="ct"><i class="ti ti-clock"></i> Carga horária e duração</div>
     <div class="r3">
@@ -200,48 +199,36 @@ textarea{min-height:150px;line-height:1.6}
       <div class="fw"><label class="fl">CH EaD (h)</label><input type="number" id="che" placeholder="0" min="0" value="0" oninput="ca()"></div>
       <div class="fw"><label class="fl">Duração por aula</label>
         <select id="da" onchange="odc()">
-          <option value="4">4 horas por aula</option>
-          <option value="3.5">3h30 por aula</option>
+          <option value="4">4 horas</option>
+          <option value="3.5">3h30</option>
           <option value="misto">Misto (4h e 3h30)</option>
           <option value="custom">Personalizado</option>
         </select>
       </div>
     </div>
     <div id="cdw" style="display:none;margin-bottom:12px">
-      <label class="fl">Duração personalizada (horas)</label>
+      <label class="fl">Duração personalizada (h)</label>
       <input type="number" id="dc" placeholder="Ex: 3" step="0.5" min="1" style="max-width:200px" oninput="ca()">
     </div>
-    <div class="chinf" id="chi">Preencha a carga horária para calcular o número de aulas automaticamente.</div>
+    <div class="chinf" id="chi">Preencha a carga horária para calcular as aulas.</div>
   </div>
   <div class="card">
     <div class="ct"><i class="ti ti-target"></i> Perfil pedagógico</div>
     <div class="r2">
       <div class="fw"><label class="fl">Nível da turma</label>
-        <select id="nv">
-          <option value="iniciante">Iniciante (sem experiência)</option>
-          <option value="intermediario" selected>Intermediário</option>
-          <option value="avancado">Avançado (com experiência)</option>
-        </select>
+        <select id="nv"><option value="iniciante">Iniciante</option><option value="intermediario" selected>Intermediário</option><option value="avancado">Avançado</option></select>
       </div>
-      <div class="fw"><label class="fl">Ênfase pedagógica</label>
-        <select id="enf">
-          <option value="equilibrado" selected>Equilibrado (teoria + prática)</option>
-          <option value="pratico">Mais prático (simulações)</option>
-          <option value="teorico">Mais teórico (base conceitual)</option>
-        </select>
+      <div class="fw"><label class="fl">Ênfase</label>
+        <select id="enf"><option value="equilibrado" selected>Equilibrado</option><option value="pratico">Mais prático</option><option value="teorico">Mais teórico</option></select>
       </div>
     </div>
     <div class="fw"><label class="fl">Modalidade</label>
-      <select id="mod">
-        <option value="presencial" selected>Presencial</option>
-        <option value="hibrido">Híbrido (presencial + EaD)</option>
-        <option value="ead">EaD</option>
-      </select>
+      <select id="mod"><option value="presencial" selected>Presencial</option><option value="hibrido">Híbrido</option><option value="ead">EaD</option></select>
     </div>
   </div>
   <div class="card">
-    <div class="ct"><i class="ti ti-notes"></i> Observações adicionais (opcional)</div>
-    <textarea id="obs" style="min-height:80px" placeholder="Ex: Turma com perfil adulto. Exemplos de PMEs. Alunos com experiência em contabilidade."></textarea>
+    <div class="ct"><i class="ti ti-notes"></i> Observações (opcional)</div>
+    <div class="po-wrap"><textarea id="obs" style="min-height:80px" placeholder="Ex: Turma com perfil adulto. Exemplos de PMEs."></textarea></div>
   </div>
   <div class="br">
     <button class="bs" onclick="gp(1)"><i class="ti ti-arrow-left"></i> Voltar</button>
@@ -249,38 +236,39 @@ textarea{min-height:150px;line-height:1.6}
   </div>
 </div>
 
-<!-- P3: GERAR -->
+<!-- P3 -->
 <div class="pan" id="p3">
-  <div class="ph"><h1>Gerar planejamento completo</h1><p>Revise as configurações e clique em gerar. A IA executará as 10 etapas pedagógicas.</p></div>
-  <div class="card" id="sc"><div class="ct"><i class="ti ti-clipboard-list"></i> Resumo da configuração</div><table class="st" id="sm"></table></div>
+  <div class="ph"><h1>Gerar planejamento</h1><p>Revise e clique em gerar. A IA executará as 10 etapas pedagógicas em 2 partes.</p></div>
+  <div class="card"><div class="ct"><i class="ti ti-clipboard-list"></i> Resumo</div><table class="st" id="sm"></table></div>
   <div class="card">
     <div class="ct"><i class="ti ti-checklist"></i> O planejamento incluirá</div>
     <div class="ckg">
-      <div class="cki"><i class="ti ti-circle-check"></i> Resumo estruturado da UC</div>
-      <div class="cki"><i class="ti ti-circle-check"></i> Matriz pedagógica completa</div>
+      <div class="cki"><i class="ti ti-circle-check"></i> Resumo da UC</div>
+      <div class="cki"><i class="ti ti-circle-check"></i> Matriz pedagógica</div>
       <div class="cki"><i class="ti ti-circle-check"></i> Análise de complexidade</div>
-      <div class="cki"><i class="ti ti-circle-check"></i> Distribuição da carga horária</div>
+      <div class="cki"><i class="ti ti-circle-check"></i> Distribuição de CH</div>
       <div class="cki"><i class="ti ti-circle-check"></i> Progressão pedagógica</div>
       <div class="cki"><i class="ti ti-circle-check"></i> Situações de aprendizagem</div>
-      <div class="cki"><i class="ti ti-circle-check"></i> Metodologias ativas SENAC SP</div>
-      <div class="cki"><i class="ti ti-circle-check"></i> Planos de aula detalhados</div>
+      <div class="cki"><i class="ti ti-circle-check"></i> Metodologias ativas SENAC</div>
+      <div class="cki"><i class="ti ti-circle-check"></i> Todos os planos de aula</div>
       <div class="cki"><i class="ti ti-circle-check"></i> Orientações ao docente</div>
-      <div class="cki"><i class="ti ti-circle-check"></i> Auditoria pedagógica final</div>
+      <div class="cki"><i class="ti ti-circle-check"></i> Auditoria pedagógica</div>
     </div>
   </div>
   <div class="ldc" id="ldc">
     <div class="spw"><div class="sp"></div></div>
-    <div class="lt" id="lt">Iniciando geração...</div>
-    <div class="ls" id="ls">Gerando em 2 partes — estrutura + todos os planos de aula</div>
+    <div class="lt" id="lt">Iniciando...</div>
+    <div style="font-size:13px;color:var(--tx2)" id="ls">Aguarde enquanto a IA processa</div>
     <div class="pw"><div class="pb" id="pb" style="width:4%"></div></div>
   </div>
   <div id="os" style="display:none">
     <div class="oh">
-      <span class="bsuc"><i class="ti ti-check" style="font-size:13px"></i> Planejamento gerado com sucesso</span>
+      <span class="bsuc"><i class="ti ti-check" style="font-size:13px"></i> Gerado com sucesso!</span>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="bsm" onclick="cp()"><i class="ti ti-copy"></i> Copiar</button>
         <button class="bsm" onclick="dl()"><i class="ti ti-download"></i> Baixar .txt</button>
-        <button class="bp" style="font-size:13px;padding:7px 14px" onclick="nuc()"><i class="ti ti-refresh"></i> Gerar outra UC</button>
+        <button class="bsm" id="bw" onclick="gerarWord()"><i class="ti ti-file-word"></i> Baixar Word</button>
+        <button class="bp" style="font-size:13px;padding:7px 14px" onclick="nuc()"><i class="ti ti-refresh"></i> Outra UC</button>
       </div>
     </div>
     <div class="ob" id="ob"></div>
@@ -288,1008 +276,368 @@ textarea{min-height:150px;line-height:1.6}
   <div id="es2" style="display:none"><div class="al ale"><i class="ti ti-alert-circle"></i><div id="em"></div></div></div>
   <div class="br" id="gbr">
     <button class="bs" onclick="gp(2)"><i class="ti ti-arrow-left"></i> Voltar</button>
-    <button class="bp" id="bg" onclick="gen()"><i class="ti ti-wand"></i> Gerar planejamento completo</button>
+    <button class="bp" onclick="gen()"><i class="ti ti-wand"></i> Gerar planejamento completo</button>
   </div>
 </div>
 
-<!-- P4: HISTÓRICO -->
+<!-- P4 -->
 <div class="pan" id="p4">
-  <div class="ph"><h1>Histórico da sessão</h1><p>Planejamentos gerados enquanto esta aba estiver aberta.</p></div>
-  <div id="hc"><div class="es"><i class="ti ti-file-off"></i>Nenhum planejamento gerado ainda nesta sessão.</div></div>
-  <div class="br"><button class="bp" onclick="gp(0)"><i class="ti ti-plus"></i> Novo planejamento</button></div>
+  <div class="ph"><h1>Histórico</h1><p>Planejamentos gerados nesta sessão.</p></div>
+  <div id="hc"><div class="es"><i class="ti ti-file-off"></i>Nenhum planejamento gerado ainda.</div></div>
+  <div class="br"><button class="bp" onclick="gp(0)"><i class="ti ti-plus"></i> Novo</button></div>
 </div>
 
-<!-- P5: API KEY -->
+<!-- P5 -->
 <div class="pan" id="p5">
-  <div class="ph"><h1>Chave de API Gemini</h1><p>Use a API gratuita do Google Gemini — sem cartão, sem cobrança.</p></div>
+  <div class="ph"><h1>API Key Gemini</h1><p>Use a API gratuita do Google Gemini.</p></div>
   <div class="card">
-    <div class="ct"><i class="ti ti-brand-google"></i> Google Gemini API — 100% Gratuita</div>
-    <div class="al als"><i class="ti ti-circle-check"></i><div><strong>Sem custo!</strong> O Google oferece a API do Gemini gratuitamente. Basta uma conta Google.</div></div>
-    <div class="al ali">
-      <i class="ti ti-info-circle"></i>
-      <div>
-        <strong>Como obter sua chave gratuita (2 minutos):</strong><br><br>
-        1. Acesse <strong>aistudio.google.com</strong><br>
-        2. Faça login com sua conta Google<br>
-        3. Clique em <strong>"Get API Key"</strong> → <strong>"Create API Key"</strong><br>
-        4. Copie a chave gerada (começa com AIza...)<br>
-        5. Cole abaixo e clique em <strong>Salvar</strong>
-      </div>
-    </div>
+    <div class="ct"><i class="ti ti-brand-google"></i> Google Gemini — Gratuita</div>
+    <div class="al als"><i class="ti ti-circle-check"></i><div><strong>Sem custo!</strong> Obtenha sua chave em <strong>aistudio.google.com</strong> → Get API Key → Create API Key</div></div>
     <div class="fw">
-      <label class="fl">Sua chave Gemini API</label>
-      <div class="akw">
-        <input type="password" id="ak" placeholder="AIzaSy...">
-        <button class="akt" onclick="tk()"><i class="ti ti-eye" id="ei"></i></button>
-      </div>
-      <div class="hint">Salva no navegador — disponível mesmo após fechar e reabrir o arquivo.</div>
+      <label class="fl">Sua chave Gemini (AIza...)</label>
+      <div class="akw"><input type="password" id="ak" placeholder="AIzaSy..."><button class="akt" onclick="tk()"><i class="ti ti-eye" id="ei"></i></button></div>
+      <div style="font-size:12px;color:var(--tx3);margin-top:4px">Salva no navegador — disponível mesmo após fechar.</div>
     </div>
     <div class="br">
-      <button class="bp" onclick="sk()"><i class="ti ti-device-floppy"></i> Salvar chave</button>
-      <button class="bs" onclick="ck()"><i class="ti ti-trash"></i> Remover</button>
-      <a href="https://aistudio.google.com/apikey" target="_blank" style="text-decoration:none">
-        <button class="bs" type="button"><i class="ti ti-external-link"></i> Abrir AI Studio</button>
-      </a>
+      <button class="bp" onclick="sk()"><i class="ti ti-device-floppy"></i> Salvar</button>
+      <button class="bs" onclick="ck2()"><i class="ti ti-trash"></i> Remover</button>
+      <a href="https://aistudio.google.com/apikey" target="_blank" style="text-decoration:none"><button class="bs" type="button"><i class="ti ti-external-link"></i> Abrir AI Studio</button></a>
     </div>
     <div id="ks" style="margin-top:10px;font-size:13px"></div>
   </div>
   <div class="card">
     <div class="ct"><i class="ti ti-help-circle"></i> Como usar</div>
-    <ol style="font-size:14px;color:var(--tx2);line-height:2.1;padding-left:1.25rem">
-      <li>Configure sua chave gratuita do Gemini nesta tela</li>
-      <li>Na <strong>Etapa 1</strong>, cole o P.O. de qualquer curso SENAC</li>
-      <li>Na <strong>Etapa 2</strong>, selecione a UC desejada</li>
-      <li>Na <strong>Etapa 3</strong>, informe carga horária e perfil da turma</li>
-      <li>Na <strong>Etapa 4</strong>, clique em gerar e aguarde o planejamento completo</li>
-      <li>Repita a partir da <strong>Etapa 2</strong> para outras UCs do mesmo curso</li>
+    <ol style="font-size:14px;color:var(--tx2);line-height:2.2;padding-left:1.25rem">
+      <li>Configure a chave Gemini nesta tela</li>
+      <li>Na <strong>Etapa 1</strong>: arraste o arquivo PDF/DOCX do P.O. ou cole o texto</li>
+      <li>Na <strong>Etapa 2</strong>: selecione a UC desejada</li>
+      <li>Na <strong>Etapa 3</strong>: configure carga horária e turma</li>
+      <li>Na <strong>Etapa 4</strong>: clique em Gerar e aguarde</li>
+      <li>Baixe o resultado em <strong>.txt</strong> ou <strong>Word (.docx)</strong></li>
     </ol>
   </div>
 </div>
 
 </main>
 </div>
+
 <script>
-const A={po:'',cn:'',ex:'',ucs:[],su:null,sun:'',hist:[],key:localStorage.getItem('gk')||''};
+// ── STATE ──────────────────────────────────────────
+var A={po:'',cn:'',ex:'',ucs:[],su:null,sun:'',hist:[],key:localStorage.getItem('gk')||''};
 
-window.addEventListener('DOMContentLoaded',()=>{
-  if(A.key){document.getElementById('ak').value=A.key;document.getElementById('ks').innerHTML='<span style="color:var(--stx)"><i class="ti ti-circle-check"></i> Chave configurada e pronta para uso</span>';}
-  else{const w=document.createElement('div');w.className='al alw';w.innerHTML='<i class="ti ti-key"></i><div>Configure sua chave gratuita do Gemini em <strong>API Key Gemini</strong> antes de gerar planejamentos.</div>';document.querySelector('#p0 .ph').after(w);}
+// ── INIT ───────────────────────────────────────────
+window.onload=function(){
+  // API key
+  if(A.key){
+    document.getElementById('ak').value=A.key;
+    document.getElementById('ks').innerHTML='<span style="color:var(--stx)"><i class="ti ti-circle-check"></i> Chave configurada</span>';
+  } else {
+    var w=document.createElement('div');
+    w.className='al alw';
+    w.innerHTML='<i class="ti ti-key"></i><div>Configure sua chave gratuita em <strong>API Key Gemini</strong> antes de gerar.</div>';
+    document.querySelector('#p0 .ph').after(w);
+  }
+
+  // ── TEXTAREA EVENTS (attached via JS, not HTML) ─
+  var po=document.getElementById('po');
+  function sync(){ 
+    var v=po.value||'';
+    A.po=v.trim();
+    var cc=document.getElementById('cc');
+    cc.textContent=v.length.toLocaleString()+' caracteres';
+    cc.className='cc'+(v.length>500?' ok':'');
+  }
+  ['input','change','keyup','keydown','paste','cut','drop','click','focus','blur','mouseup'].forEach(function(ev){
+    po.addEventListener(ev,function(){ setTimeout(sync,20); });
+  });
+  // Interval fallback — reads value every 200ms regardless of events
+  setInterval(sync,200);
+
   ca();
-});
+};
 
-// ── LEITURA DE ARQUIVO ──────────────────────────────
-function atualizarContador(){
-  var ta = document.getElementById('po');
-  var cc = document.getElementById('cc');
-  if(ta && cc){
-    var n = ta.value.length;
-    cc.textContent = n.toLocaleString() + ' caracteres';
-    cc.style.color = n > 500 ? 'var(--stx)' : 'var(--or)';
-  }
-}
-
-function onDragOver(e){
-  e.preventDefault(); e.stopPropagation();
-  document.getElementById('dropzone').style.borderColor='var(--or)';
-  document.getElementById('dropzone').style.background='var(--orl)';
-}
-function onDragLeave(e){
-  document.getElementById('dropzone').style.borderColor='var(--bds)';
-  document.getElementById('dropzone').style.background='var(--sv2)';
-}
-function onDrop(e){
-  e.preventDefault(); e.stopPropagation();
-  onDragLeave(e);
-  var files = e.dataTransfer.files;
-  if(files.length > 0) processFile(files[0]);
-}
-function onFileSelect(e){
-  var files = e.target.files;
-  if(files.length > 0) processFile(files[0]);
-}
-
-function showFileStatus(msg, ok){
-  var el = document.getElementById('fileStatus');
-  el.style.display = 'block';
-  el.style.color = ok ? 'var(--stx)' : 'var(--wtx)';
-  el.textContent = msg;
-}
-
-function processFile(file){
-  var name = file.name.toLowerCase();
-  showFileStatus('Carregando: ' + file.name + '...', true);
-
-  if(name.endsWith('.txt')){
-    var r = new FileReader();
-    r.onload = function(e){
-      document.getElementById('po').value = e.target.result;
-      atualizarContador();
-      showFileStatus('✓ Arquivo carregado: ' + file.name + ' (' + e.target.result.length.toLocaleString() + ' caracteres)', true);
-    };
-    r.onerror = function(){ showFileStatus('Erro ao ler o arquivo.', false); };
-    r.readAsText(file, 'UTF-8');
-  }
-  else if(name.endsWith('.pdf')){
-    // Use PDF.js via CDN
-    if(!window.pdfjsLib){
-      var s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-      s.onload = function(){
-        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        lerPDF(file);
-      };
-      document.head.appendChild(s);
-    } else {
-      lerPDF(file);
-    }
-  }
-  else if(name.endsWith('.docx') || name.endsWith('.doc')){
-    // Use mammoth.js via CDN
-    if(!window.mammoth){
-      var s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js';
-      s.onload = function(){ lerDOCX(file); };
-      document.head.appendChild(s);
-    } else {
-      lerDOCX(file);
-    }
-  }
-  else {
-    showFileStatus('Formato não suportado. Use .txt, .pdf ou .docx', false);
-  }
-}
-
-function lerPDF(file){
-  var r = new FileReader();
-  r.onload = function(e){
-    var data = new Uint8Array(e.target.result);
-    pdfjsLib.getDocument({data: data}).promise.then(function(pdf){
-      var textos = [];
-      var total = pdf.numPages;
-      var lidas = 0;
-      for(var i = 1; i <= total; i++){
-        (function(pageNum){
-          pdf.getPage(pageNum).then(function(page){
-            page.getTextContent().then(function(tc){
-              textos[pageNum-1] = tc.items.map(function(item){ return item.str; }).join(' ');
-              lidas++;
-              if(lidas === total){
-                var txt = textos.join('
-');
-                document.getElementById('po').value = txt;
-                atualizarContador();
-                showFileStatus('✓ PDF carregado: ' + total + ' páginas (' + txt.length.toLocaleString() + ' caracteres)', true);
-              }
-            });
-          });
-        })(i);
-      }
-    }).catch(function(err){
-      showFileStatus('Erro ao ler PDF: ' + err.message, false);
-    });
-  };
-  r.readAsArrayBuffer(file);
-}
-
-function lerDOCX(file){
-  var r = new FileReader();
-  r.onload = function(e){
-    mammoth.extractRawText({arrayBuffer: e.target.result}).then(function(result){
-      var txt = result.value;
-      document.getElementById('po').value = txt;
-      atualizarContador();
-      showFileStatus('✓ Documento carregado: ' + txt.length.toLocaleString() + ' caracteres', true);
-    }).catch(function(err){
-      showFileStatus('Erro ao ler documento: ' + err.message, false);
-    });
-  };
-  r.readAsArrayBuffer(file);
-}
-
-function opi(){atualizarContador();}
-
-function dUC(t){
-  const f=[];const s=new Set();
-  const r=/UC\s*(\d+)\s*[:\-–]\s*([^\n\r]{6,100}?)(?=\s*\n|\s*CARGA|\s*\d+\s*h|\s*$)/gi;
-  let m;
-  while((m=r.exec(t))!==null){
-    const n=m[1],nm=m[2].trim().replace(/\s+/g,' ').replace(/[.,:;]+$/,'');
-    if(!s.has(n)&&nm.length>4){s.add(n);const sl=t.slice(m.index,m.index+400);const ch=sl.match(/(\d+)\s*horas?/i);f.push({num:n,name:nm,ch:ch?ch[1]+'h':''});}
-  }
-  return f;
-}
-
-function rUCG(){
-  const g=document.getElementById('ucg');
-  if(!A.ucs.length){g.innerHTML='<div class="es"><i class="ti ti-search-off"></i>Nenhuma UC detectada. Use o campo manual abaixo.</div>';return;}
-  g.innerHTML=A.ucs.map((u,i)=>`<div class="ucc${A.su===i?' sl':''}" id="uc${i}" onclick="suc(${i})"><div class="ucn">UC${u.num}</div><div class="uct">${u.name}</div>${u.ch?`<div class="uch"><i class="ti ti-clock"></i> ${u.ch}</div>`:''}</div>`).join('');
-}
-
-function suc(i){
-  A.su=i;A.sun='UC'+A.ucs[i].num+' – '+A.ucs[i].name;
-  document.querySelectorAll('.ucc').forEach(c=>c.classList.remove('sl'));
-  const el=document.getElementById('uc'+i);if(el)el.classList.add('sl');
-  document.getElementById('ucm').value='';
-  if(A.ucs[i].ch){document.getElementById('chp').value=parseInt(A.ucs[i].ch);ca();}
-}
-
-function omi(){A.su=null;document.querySelectorAll('.ucc').forEach(c=>c.classList.remove('sl'));}
-
-function odc(){document.getElementById('cdw').style.display=document.getElementById('da').value==='custom'?'block':'none';ca();}
-
-function ca(){
-  const p=parseFloat(document.getElementById('chp').value)||0;
-  const e=parseFloat(document.getElementById('che').value)||0;
-  const tot=p+e;const d=document.getElementById('da').value;
-  let dv=d==='4'?4:d==='3.5'?3.5:d==='misto'?3.75:parseFloat(document.getElementById('dc')?.value)||0;
-  const el=document.getElementById('chi');
-  if(tot>0&&dv>0){const n=Math.ceil(tot/dv);const nt=d==='misto'?' (média 3h45, estimado)':'';el.innerHTML=`<i class="ti ti-calculator"></i> Total: <strong>${tot}h</strong> ÷ ${dv}h = <strong>~${n} aulas</strong>${nt}`;}
-  else{el.innerHTML='Preencha a carga horária para calcular o número de aulas automaticamente.';}
-}
-
-// Sync PO text periodically when on panel 0
+// ── NAV ────────────────────────────────────────────
 function gp(i){
-  document.querySelectorAll('.pan').forEach((p,idx)=>p.classList.toggle('act',idx===i));
-  ['nv0','nv1','nv2','nv3','nv4','nv5'].forEach((id,idx)=>{const el=document.getElementById(id);if(!el)return;el.classList.remove('act');if(idx===i)el.classList.add('act');});
+  document.querySelectorAll('.pan').forEach(function(p,idx){p.classList.toggle('act',idx===i);});
+  ['nv0','nv1','nv2','nv3','nv4','nv5'].forEach(function(id,idx){
+    var el=document.getElementById(id);if(!el)return;
+    el.classList.remove('act');if(idx===i)el.classList.add('act');
+  });
   if(i===3)rs();if(i===4)rh();window.scrollTo(0,0);
 }
 
+// ── STEP 0 ─────────────────────────────────────────
 function s0(){
-  // Tenta todas as formas possíveis de ler o texto
-  var el = document.getElementById('po');
-  var txt = '';
-  
-  // Método 1: .value direto
-  if(el && el.value) txt = el.value.trim();
-  
-  // Método 2: innerHTML como fallback
-  if(!txt && el && el.innerHTML) txt = el.innerHTML.replace(/<[^>]*>/g,'').trim();
-  
-  // Método 3: innerText
-  if(!txt && el && el.innerText) txt = el.innerText.trim();
-  
-  // Método 4: textContent
-  if(!txt && el && el.textContent) txt = el.textContent.trim();
-  
-  A.po = txt;
-  A.cn = (document.getElementById('cn').value || '').trim();
-  A.ex = document.getElementById('ex').value || '';
-  
-  // Atualiza contador visual
-  var cc = document.getElementById('cc');
-  if(cc){ cc.textContent = A.po.length.toLocaleString() + ' caracteres'; cc.style.color = A.po.length > 500 ? 'var(--stx)' : 'var(--or)'; }
+  // Read directly from DOM every time
+  var po=document.getElementById('po');
+  A.po=(po.value||po.textContent||po.innerText||'').trim();
+  A.cn=(document.getElementById('cn').value||'').trim();
+  A.ex=document.getElementById('ex').value||'';
   
   if(!A.po){
-    alert('Nenhum texto encontrado no campo do P.O.\n\nO texto está visível na caixa? Se sim, clique dentro da caixa uma vez e depois clique em Continuar novamente.');
+    alert('Nenhum texto encontrado!\n\nArraste o arquivo PDF/DOCX do P.O. ou cole o texto com Ctrl+V.');
     return;
   }
-  
-  A.ucs = dUC(A.po);
-  rUCG();
-  gp(1);
+  A.ucs=dUC(A.po);rUCG();gp(1);
 }
 
+// ── DETECT UCs ─────────────────────────────────────
+function dUC(t){
+  var f=[],s=new Set(),r=/UC\s*(\d+)\s*[:\-–]\s*([^\n\r]{6,100}?)(?=\s*\n|\s*CARGA|\s*\d+\s*h|\s*$)/gi,m;
+  while((m=r.exec(t))!==null){
+    var n=m[1],nm=m[2].trim().replace(/\s+/g,' ').replace(/[.,:;]+$/,'');
+    if(!s.has(n)&&nm.length>4){s.add(n);var sl=t.slice(m.index,m.index+400),ch=sl.match(/(\d+)\s*horas?/i);f.push({num:n,name:nm,ch:ch?ch[1]+'h':''});}
+  }
+  return f;
+}
+function rUCG(){
+  var g=document.getElementById('ucg');
+  if(!A.ucs.length){g.innerHTML='<div class="es"><i class="ti ti-search-off"></i>Nenhuma UC detectada. Use o campo manual.</div>';return;}
+  g.innerHTML=A.ucs.map(function(u,i){return '<div class="ucc'+(A.su===i?' sl':'')+'" id="uc'+i+'" onclick="suc('+i+')"><div class="ucn">UC'+u.num+'</div><div class="uct">'+u.name+'</div>'+(u.ch?'<div class="uch"><i class="ti ti-clock"></i> '+u.ch+'</div>':'')+'</div>';}).join('');
+}
+function suc(i){
+  A.su=i;A.sun='UC'+A.ucs[i].num+' – '+A.ucs[i].name;
+  document.querySelectorAll('.ucc').forEach(function(c){c.classList.remove('sl');});
+  var el=document.getElementById('uc'+i);if(el)el.classList.add('sl');
+  document.getElementById('ucm').value='';
+  if(A.ucs[i].ch){document.getElementById('chp').value=parseInt(A.ucs[i].ch);ca();}
+}
 function s1(){
-  const m=document.getElementById('ucm').value.trim();
-  if(A.su===null&&!m){alert('Selecione uma UC ou descreva-a manualmente.');return;}
+  var m=document.getElementById('ucm').value.trim();
+  if(A.su===null&&!m){alert('Selecione uma UC ou descreva manualmente.');return;}
   if(m&&A.su===null)A.sun=m.split('\n')[0].substring(0,120);
   gp(2);
 }
 
+// ── STEP 2 ─────────────────────────────────────────
+function odc(){document.getElementById('cdw').style.display=document.getElementById('da').value==='custom'?'block':'none';ca();}
+function ca(){
+  var p=parseFloat(document.getElementById('chp').value)||0,e=parseFloat(document.getElementById('che').value)||0,tot=p+e;
+  var d=document.getElementById('da').value,dv=d==='4'?4:d==='3.5'?3.5:d==='misto'?3.75:parseFloat(document.getElementById('dc')&&document.getElementById('dc').value)||0;
+  var el=document.getElementById('chi');
+  if(tot>0&&dv>0){el.innerHTML='<i class="ti ti-calculator"></i> Total: <strong>'+tot+'h</strong> ÷ '+dv+'h = <strong>~'+Math.ceil(tot/dv)+' aulas</strong>'+(d==='misto'?' (estimado)':'');}
+  else{el.innerHTML='Preencha a carga horária para calcular as aulas.';}
+}
 function s2(){if(!document.getElementById('chp').value){alert('Informe a carga horária presencial.');return;}gp(3);}
 
+// ── SUMMARY ────────────────────────────────────────
 function rs(){
-  const ucn=A.sun||document.getElementById('ucm').value.split('\n')[0]||'Não selecionada';
-  const p=document.getElementById('chp').value||'?';const e=document.getElementById('che').value||'0';
-  const dur=document.getElementById('da');const nv=document.getElementById('nv');const enf=document.getElementById('enf');const mod=document.getElementById('mod');
-  const tot=(parseFloat(p)||0)+(parseFloat(e)||0);
-  document.getElementById('sm').innerHTML=`<tr><td>Curso</td><td>${A.cn||'(não informado)'}</td></tr><tr><td>Eixo</td><td>${A.ex}</td></tr><tr><td>UC selecionada</td><td>${ucn}</td></tr><tr><td>CH presencial</td><td>${p}h</td></tr><tr><td>CH EaD</td><td>${e}h</td></tr><tr><td>CH total</td><td><strong>${tot}h</strong></td></tr><tr><td>Duração das aulas</td><td>${dur.options[dur.selectedIndex].text}</td></tr><tr><td>Nível da turma</td><td>${nv.options[nv.selectedIndex].text}</td></tr><tr><td>Ênfase</td><td>${enf.options[enf.selectedIndex].text}</td></tr><tr><td>Modalidade</td><td>${mod.options[mod.selectedIndex].text}</td></tr>`;
+  var ucn=A.sun||document.getElementById('ucm').value.split('\n')[0]||'Não selecionada';
+  var p=document.getElementById('chp').value||'?',e=document.getElementById('che').value||'0';
+  var dur=document.getElementById('da'),nv=document.getElementById('nv'),enf=document.getElementById('enf'),mod=document.getElementById('mod');
+  var tot=(parseFloat(p)||0)+(parseFloat(e)||0);
+  document.getElementById('sm').innerHTML='<tr><td>Curso</td><td>'+(A.cn||'(não informado)')+'</td></tr><tr><td>Eixo</td><td>'+A.ex+'</td></tr><tr><td>UC</td><td>'+ucn+'</td></tr><tr><td>CH total</td><td><strong>'+tot+'h</strong></td></tr><tr><td>Duração das aulas</td><td>'+dur.options[dur.selectedIndex].text+'</td></tr><tr><td>Nível</td><td>'+nv.options[nv.selectedIndex].text+'</td></tr><tr><td>Ênfase</td><td>'+enf.options[enf.selectedIndex].text+'</td></tr><tr><td>Modalidade</td><td>'+mod.options[mod.selectedIndex].text+'</td></tr>';
 }
 
-async function chamadaGemini(key, prompt){
-  const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:65536,temperature:0.7}})});
-  const d=await r.json();
-  if(d.error) throw new Error(d.error.message||JSON.stringify(d.error));
-  if(!d.candidates||!d.candidates[0]) throw new Error('Resposta vazia da API');
-  return d.candidates[0].content.parts.map(p=>p.text||'').join('\n');
+// ── DROP ZONE ──────────────────────────────────────
+function dzOv(e){e.preventDefault();document.getElementById('dz').classList.add('over');}
+function dzLv(e){document.getElementById('dz').classList.remove('over');}
+function dzDp(e){e.preventDefault();dzLv(e);var f=e.dataTransfer.files[0];if(f)pArq(f);}
+function onFi(e){var f=e.target.files[0];if(f)pArq(f);}
+
+function fst(msg,ok){var el=document.getElementById('fst');el.style.display='block';el.style.color=ok?'var(--stx)':'var(--wtx)';el.textContent=msg;}
+
+function pArq(file){
+  var nm=file.name.toLowerCase();
+  fst('Carregando: '+file.name+'...',true);
+  if(nm.endsWith('.txt')){
+    var r=new FileReader();
+    r.onload=function(e){var t=e.target.result;document.getElementById('po').value=t;A.po=t.trim();var cc=document.getElementById('cc');cc.textContent=t.length.toLocaleString()+' caracteres';cc.className='cc'+(t.length>500?' ok':'');fst('✓ '+file.name+' ('+t.length.toLocaleString()+' chars)',true);};
+    r.readAsText(file,'UTF-8');
+  } else if(nm.endsWith('.pdf')){
+    if(!window.pdfjsLib){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';s.onload=function(){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';lerPDF(file);};document.head.appendChild(s);}
+    else{lerPDF(file);}
+  } else if(nm.endsWith('.docx')||nm.endsWith('.doc')){
+    if(!window.mammoth){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js';s.onload=function(){lerDOCX(file);};document.head.appendChild(s);}
+    else{lerDOCX(file);}
+  } else {fst('Use .txt, .pdf ou .docx',false);}
+}
+function lerPDF(file){
+  var r=new FileReader();
+  r.onload=function(ev){
+    pdfjsLib.getDocument({data:new Uint8Array(ev.target.result)}).promise.then(function(pdf){
+      var txts=[],tot=pdf.numPages,lidas=0;
+      for(var i=1;i<=tot;i++){(function(pn){pdf.getPage(pn).then(function(pg){pg.getTextContent().then(function(tc){txts[pn-1]=tc.items.map(function(it){return it.str;}).join(' ');lidas++;if(lidas===tot){var t=txts.join('\n');document.getElementById('po').value=t;A.po=t.trim();var cc=document.getElementById('cc');cc.textContent=t.length.toLocaleString()+' caracteres';cc.className='cc ok';fst('✓ PDF: '+tot+' páginas',true);}});});});(i);}
+    }).catch(function(e){fst('Erro PDF: '+e.message,false);});
+  };
+  r.readAsArrayBuffer(file);
+}
+function lerDOCX(file){
+  var r=new FileReader();
+  r.onload=function(ev){
+    mammoth.extractRawText({arrayBuffer:ev.target.result}).then(function(res){
+      document.getElementById('po').value=res.value;A.po=res.value.trim();
+      var cc=document.getElementById('cc');cc.textContent=res.value.length.toLocaleString()+' caracteres';cc.className='cc ok';
+      fst('✓ Documento: '+res.value.length.toLocaleString()+' chars',true);
+    }).catch(function(e){fst('Erro DOCX: '+e.message,false);});
+  };
+  r.readAsArrayBuffer(file);
+}
+
+// ── GENERATION ─────────────────────────────────────
+async function chamada(key,prompt){
+  var r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:65536,temperature:0.7}})});
+  var d=await r.json();
+  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+  if(!d.candidates||!d.candidates[0])throw new Error('Resposta vazia');
+  return d.candidates[0].content.parts.map(function(p){return p.text||'';}).join('\n');
 }
 
 async function gen(){
-  const key=A.key||localStorage.getItem('gk')||'';
-  if(!key){alert('Configure sua chave gratuita do Gemini na aba "API Key Gemini" antes de gerar.');gp(5);return;}
-  const po=A.po;const ucn=A.sun||document.getElementById('ucm').value.trim();
-  const p=document.getElementById('chp').value;const e=document.getElementById('che').value||'0';
-  const dur=document.getElementById('da');const durT=dur.options[dur.selectedIndex].text;
-  const nv=document.getElementById('nv');const enf=document.getElementById('enf');const mod=document.getElementById('mod');
-  const obs=document.getElementById('obs').value.trim();const tot=(parseFloat(p)||0)+(parseFloat(e)||0);
-  const nAulas=Math.ceil(tot/(parseFloat(durT)||4));
-  if(!po){alert('Volte à etapa 1 e cole o P.O.');return;}
-  if(!ucn){alert('Selecione ou descreva uma UC na etapa 2.');return;}
+  var key=A.key||localStorage.getItem('gk')||'';
+  if(!key){alert('Configure a chave Gemini em "API Key Gemini".');gp(5);return;}
+  var po=A.po||(document.getElementById('po').value||'').trim();
+  var ucn=A.sun||document.getElementById('ucm').value.trim();
+  var p=document.getElementById('chp').value,e=document.getElementById('che').value||'0';
+  var dur=document.getElementById('da'),durT=dur.options[dur.selectedIndex].text;
+  var nv=document.getElementById('nv'),enf=document.getElementById('enf'),mod=document.getElementById('mod');
+  var obs=document.getElementById('obs').value.trim(),tot=(parseFloat(p)||0)+(parseFloat(e)||0);
+  var nAulas=Math.ceil(tot/({'4':4,'3.5':3.5,'misto':3.75,'custom':parseFloat(document.getElementById('dc')&&document.getElementById('dc').value)||4}[document.getElementById('da').value]||4));
+  if(!po){alert('Cole o P.O. na Etapa 1.');return;}
+  if(!ucn){alert('Selecione uma UC na Etapa 2.');return;}
+  if(!p){alert('Configure a carga horária na Etapa 3.');return;}
 
   document.getElementById('gbr').style.display='none';
   document.getElementById('os').style.display='none';
   document.getElementById('es2').style.display='none';
   document.getElementById('ldc').style.display='block';
 
-  const dadosBase=`CURSO: ${A.cn||'N/I'} | EIXO: ${A.ex} | UC: ${ucn} | CH PRESENCIAL: ${p}h | CH EAD: ${e}h | CH TOTAL: ${tot}h | DURAÇÃO DAS AULAS: ${durT} | NÚMERO DE AULAS: ${nAulas} | MODALIDADE: ${mod.options[mod.selectedIndex].text} | NÍVEL: ${nv.options[nv.selectedIndex].text} | ÊNFASE: ${enf.options[enf.selectedIndex].text}${obs?' | OBS: '+obs:''}`;
+  var base='Curso: '+(A.cn||'N/I')+' | Eixo: '+A.ex+' | UC: '+ucn+' | CH: '+tot+'h | Aulas: '+durT+' | '+nAulas+' aulas | '+mod.options[mod.selectedIndex].text+' | '+nv.options[nv.selectedIndex].text+' | '+enf.options[enf.selectedIndex].text+(obs?' | '+obs:'');
+  var banco='Apresentação e discussão de vídeo, Atividade em grupos com plenária, Brainstorming, Mapa conceitual, Debate, Diário de bordo, Dinâmica de grupo, Discussão de caso, Dramatização, Elaboração de portfólio, Entrevista, Experimentação, Exposição dialogada, Jogo, Pesquisa, Simulação, Storytelling, Trabalho com projetos, Visita técnica, World Café';
 
-  const bancoEstrategias=`Apresentação e discussão de vídeo, Atividade em grupos com plenária, Atividade individual de internalização, Brainstorming, Construção de mapa conceitual, Contrato de aprendizagem, Debate, Diário de bordo, Dinâmica de grupo, Discussão de caso, Dramatização, Elaboração de mural, Elaboração de portfólio, Entrevista, Experimentação, Exposição dialogada, Jogo, Leitura de textos, Palestra, Pesquisa, Simulação, Storytelling, Trabalho com projetos, Visita técnica, Webgincana, Webquest, World Café`;
+  var steps1=[['Analisando o P.O...',8],['Matriz pedagógica...',20],['Análise de complexidade...',32],['Distribuindo carga horária...',44],['Progressão pedagógica...',52]];
+  var steps2=[['Gerando planos de aula...',60],['Situações de aprendizagem...',72],['Metodologias ativas...',82],['Auditoria pedagógica...',90],['Relatórios finais...',97]];
+  var si=0;
+  document.getElementById('pb').style.width='4%';
+  var iv=setInterval(function(){if(si<steps1.length){document.getElementById('lt').textContent=steps1[si][0];document.getElementById('pb').style.width=steps1[si][1]+'%';si++;}},4000);
 
-  // ── PARTE 1: Etapas 1 a 5 ──────────────────────────────
-  const steps1=[['Analisando o Plano de Curso...',8],['Construindo a matriz pedagógica...',20],['Analisando complexidade dos conhecimentos...',32],['Distribuindo a carga horária...',44],['Definindo progressão pedagógica...',52]];
-  let si=0;document.getElementById('pb').style.width='4%';
-  const iv=setInterval(()=>{if(si<steps1.length){document.getElementById('lt').textContent=steps1[si][0];document.getElementById('pb').style.width=steps1[si][1]+'%';si++;}},4000);
-
-  const prompt1=`Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda inteiramente em português brasileiro.
-
-${dadosBase}
-
-BANCO DE ESTRATÉGIAS SENAC SP: ${bancoEstrategias}
-
-PLANO DE ORGANIZAÇÃO:
-${po}
-
-Execute APENAS as etapas 1 a 5:
-
-ETAPA 1 – RESUMO ESTRUTURADO DA UC
-Extraia e organize: UC, CH total, Indicadores numerados, todos os Conhecimentos listados, todas as Habilidades, todas as Atitudes/Valores, Evidências de Aprendizagem, Critérios de Avaliação.
-
-ETAPA 2 – MATRIZ PEDAGÓGICA
-Tabela completa: Indicador | Conhecimentos vinculados | Habilidades | Atitudes | Evidências esperadas.
-REGRA: Nenhum indicador sem mapeamento. Nenhum conhecimento sem vínculo.
-
-ETAPA 3 – ANÁLISE DE COMPLEXIDADE
-Para CADA conhecimento: Nível (Básico/Intermediário/Avançado) | Justificativa | Nº de aulas estimado.
-Apresente em tabela.
-
-ETAPA 4 – DISTRIBUIÇÃO DA CARGA HORÁRIA
-CH total: ${tot}h | Aulas de ${durT} | Total: ${nAulas} aulas.
-Tabela: Nº da Aula | Tema Principal | CH | Tipo (Presencial/EaD) | Indicadores
-
-ETAPA 5 – PROGRESSÃO PEDAGÓGICA
-Descreva a sequência lógica das ${nAulas} aulas com justificativa pedagógica para cada bloco. Mostre como o aluno evolui da aula 1 até o alcance de todos os indicadores.
-
-ATENÇÃO: Seja detalhado e completo. NÃO gere os planos de aula ainda — isso será feito em etapa separada.`;
-
-  let parte1='';
+  var p1='';
   try{
+    p1=await chamada(key,'Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda em português brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nEXECUTE ETAPAS 1-5:\nETAPA 1 – RESUMO: UC, CH, Indicadores numerados, Conhecimentos, Habilidades, Atitudes, Evidências, Critérios.\nETAPA 2 – MATRIZ PEDAGÓGICA: Tabela Indicador|Conhecimentos|Habilidades|Atitudes|Evidências. Nenhum sem mapeamento.\nETAPA 3 – COMPLEXIDADE: Para cada conhecimento: nível (Básico/Intermediário/Avançado), justificativa, nº aulas.\nETAPA 4 – DISTRIBUIÇÃO CH: '+tot+'h, '+durT+', '+nAulas+' aulas. Tabela: Nº|Tema|CH|Tipo|Indicadores.\nETAPA 5 – PROGRESSÃO: Sequência lógica justificada das '+nAulas+' aulas. NÃO gere planos de aula ainda.');
     clearInterval(iv);
-    const iv2=setInterval(()=>{if(si<steps1.length){document.getElementById('lt').textContent=steps1[si][0];document.getElementById('pb').style.width=steps1[si][1]+'%';si++;}},4000);
-    parte1=await chamadaGemini(key,prompt1);
-    clearInterval(iv2);
     document.getElementById('pb').style.width='52%';
-    document.getElementById('lt').textContent='Gerando planos de aula (parte 1 de 2)...';
-  }catch(err){
-    clearInterval(iv);
-    document.getElementById('ldc').style.display='none';
-    serr(`Erro na Parte 1: ${err.message}`);
-    return;
-  }
+    si=0;
+    var iv2=setInterval(function(){if(si<steps2.length){document.getElementById('lt').textContent=steps2[si][0];document.getElementById('pb').style.width=steps2[si][1]+'%';si++;}},5000);
 
-  // ── PARTE 2: Etapas 6 a 10 (todos os planos de aula) ──
-  const steps2=[['Gerando planos de aula detalhados...',62],['Criando situações de aprendizagem...',72],['Aplicando metodologias ativas SENAC...',82],['Executando auditoria pedagógica...',90],['Finalizando relatórios de cobertura...',97]];
-  let si2=0;
-  const iv3=setInterval(()=>{if(si2<steps2.length){document.getElementById('lt').textContent=steps2[si2][0];document.getElementById('pb').style.width=steps2[si2][1]+'%';si2++;}},5000);
-
-  const prompt2=`Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda inteiramente em português brasileiro.
-
-${dadosBase}
-
-BANCO DE ESTRATÉGIAS SENAC SP: ${bancoEstrategias}
-
-PLANO DE ORGANIZAÇÃO:
-${po}
-
-PLANEJAMENTO JÁ REALIZADO (etapas 1 a 5):
-${parte1}
-
-Com base no planejamento acima, execute as etapas 6 a 10.
-
-ETAPA 6 – SITUAÇÕES DE APRENDIZAGEM
-Para CADA uma das ${nAulas} aulas, crie situação contextualizada:
-Aula N | Título | Contexto profissional real de RH | Problema/Desafio | Objetivo | Como se desenvolve | Entrega esperada | Evidências observáveis | Critérios de desempenho | Indicadores contemplados
-
-ETAPA 7 – METODOLOGIAS ATIVAS
-Para cada aula, indique a estratégia do Banco SENAC SP e justifique pedagogicamente. Diversifique — não repita a mesma em aulas consecutivas.
-
-ETAPA 8 – PLANOS DE AULA COMPLETOS
-Gere TODOS os ${nAulas} planos de aula. Para CADA aula use EXATAMENTE este formato:
-
-╔══════════════════════════════════════════════════
-AULA [N] de ${nAulas} — [TÍTULO DA AULA]
-CH: [X]h | Modalidade: [Presencial/EaD]
-══════════════════════════════════════════════════
-Indicadores trabalhados: [números]
-Conhecimentos: [lista]
-Habilidades: [lista]
-Atitudes: [lista]
-Objetivo da aula: [descrição clara]
-Situação de aprendizagem: [contexto profissional]
-Metodologia ativa: [nome do Banco SENAC SP]
-Recursos necessários: [lista]
-
-DESENVOLVIMENTO:
-  • Acolhimento (15 min): [o que o docente faz]
-  • Mobilização (20 min): [como ativa conhecimentos prévios]
-  • Desenvolvimento: [conteúdo e mediação]
-  • Prática: [atividade prática dos alunos]
-  • Sistematização (20 min): [síntese e consolidação]
-  • Encerramento (15 min): [fechamento e próxima aula]
-
-Produto esperado: [entrega concreta]
-Instrumentos de acompanhamento: [como o docente avalia]
-Evidências de aprendizagem: [o que demonstra aprendizado]
-Critérios observáveis: [como identificar o alcance]
-Orientações ao docente: [dicas e cuidados]
-Possíveis dificuldades: [antecipe obstáculos]
-Estratégias de intervenção: [como lidar com dificuldades]
-Perguntas para reflexão: [3 perguntas para os alunos]
-Checklist docente: [lista de verificação]
-╚══════════════════════════════════════════════════
-
-ETAPA 9 – CONTEXTUALIZAÇÃO
-Confirme que todos os exemplos, cenários e situações estão adaptados ao eixo ${A.ex} e à realidade profissional de RH.
-
-ETAPA 10 – AUDITORIA PEDAGÓGICA FINAL
-Responda com ✓ ou ✗ e justifique:
-✓/✗ Todos os ${nAulas} planos de aula foram gerados?
-✓/✗ Todos os conhecimentos foram contemplados?
-✓/✗ Todos os 4 indicadores foram trabalhados em pelo menos uma aula?
-✓/✗ Todas as habilidades foram desenvolvidas?
-✓/✗ Todas as atitudes foram contempladas?
-✓/✗ Existe progressão pedagógica clara?
-✓/✗ Equilíbrio entre teoria e prática?
-✓/✗ CH total de ${tot}h distribuída corretamente?
-✓/✗ Evidências permitem avaliar os indicadores?
-
-RELATÓRIO FINAL:
-Tabela 1 – Cobertura dos Indicadores: Indicador | Aulas que contemplam | Status
-Tabela 2 – Cobertura dos Conhecimentos: Conhecimento | Aulas que contemplam | Status
-Tabela 3 – Cobertura de Habilidades e Atitudes: Item | Aulas | Status`;
-
-  try{
-    const parte2=await chamadaGemini(key,prompt2);
-    clearInterval(iv3);
+    var p2=await chamada(key,'Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda em português brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nPLANEJAMENTO (etapas 1-5) JÁ FEITO:\n'+p1+'\n\nEXECUTE ETAPAS 6-10:\nETAPA 6 – SITUAÇÕES: Para cada uma das '+nAulas+' aulas: Título|Contexto real de RH|Problema|Objetivo|Desenvolvimento|Entrega|Evidências|Critérios|Indicadores.\nETAPA 7 – METODOLOGIAS: Para cada aula, estratégia do Banco SENAC SP com justificativa. Diversifique.\nETAPA 8 – TODOS OS '+nAulas+' PLANOS DE AULA. Para cada aula:\n╔══════════════════════════════════\nAULA [N] de '+nAulas+' — [TÍTULO]\nCH: [X]h | [Presencial/EaD]\n══════════════════════════════════\nIndicadores:\nConhecimentos:\nHabilidades:\nAtitudes:\nObjetivo:\nSituação de aprendizagem:\nMetodologia ativa:\nRecursos necessários:\nDESENVOLVIMENTO:\n  • Acolhimento (15min):\n  • Mobilização (20min):\n  • Desenvolvimento:\n  • Prática:\n  • Sistematização (20min):\n  • Encerramento (15min):\nProduto esperado:\nInstrumentos de acompanhamento:\nEvidências de aprendizagem:\nCritérios observáveis:\nOrientações ao docente:\nPossíveis dificuldades:\nEstratégias de intervenção:\nPerguntas para reflexão:\nChecklist docente:\n╚══════════════════════════════════\nETAPA 9 – CONTEXTUALIZAÇÃO: Confirme adaptação ao eixo '+A.ex+'.\nETAPA 10 – AUDITORIA: ✓/✗ com justificativa para cada item. Tabelas de cobertura.');
+    clearInterval(iv2);
     document.getElementById('pb').style.width='100%';
     document.getElementById('ldc').style.display='none';
 
-    const txtFinal=`${'═'.repeat(60)}\nPLANEJAMENTO PEDAGÓGICO SENAC — ${ucn}\nGerado em: ${new Date().toLocaleString('pt-BR')}\n${'═'.repeat(60)}\n\n` +
-      `${'─'.repeat(60)}\nPARTE 1 — ESTRUTURA PEDAGÓGICA (Etapas 1 a 5)\n${'─'.repeat(60)}\n\n${parte1}\n\n` +
-      `${'─'.repeat(60)}\nPARTE 2 — PLANOS DE AULA COMPLETOS (Etapas 6 a 10)\n${'─'.repeat(60)}\n\n${parte2}`;
-
-    document.getElementById('ob').textContent=txtFinal;
+    var txt='═'.repeat(60)+'\nPLANEJAMENTO PEDAGÓGICO SENAC — '+ucn+'\nGerado em: '+new Date().toLocaleString('pt-BR')+'\n'+'═'.repeat(60)+'\n\nPARTE 1 — ESTRUTURA (Etapas 1-5)\n'+'─'.repeat(60)+'\n\n'+p1+'\n\nPARTE 2 — PLANOS DE AULA (Etapas 6-10)\n'+'─'.repeat(60)+'\n\n'+p2;
+    document.getElementById('ob').textContent=txt;
     document.getElementById('os').style.display='block';
     document.getElementById('gbr').style.display='none';
-    A.hist.unshift({uc:A.sun||ucn,curso:A.cn,ts:new Date().toLocaleString('pt-BR'),out:txtFinal});
+    A.hist.unshift({uc:A.sun||ucn,curso:A.cn,ts:new Date().toLocaleString('pt-BR'),out:txt});
     document.getElementById('hd').style.display='block';
   }catch(err){
-    clearInterval(iv3);
+    clearInterval(iv);
     document.getElementById('ldc').style.display='none';
-    // Salva pelo menos a parte 1
-    const txtParcial=`ATENÇÃO: Geração incompleta — erro na Parte 2.\n\n${parte1}`;
-    document.getElementById('ob').textContent=txtParcial;
-    document.getElementById('os').style.display='block';
+    if(p1){document.getElementById('ob').textContent='PARTE 1 GERADA:\n\n'+p1;document.getElementById('os').style.display='block';}
+    document.getElementById('em').innerHTML='Erro: '+err.message+(p1?'<br><br>A Parte 1 está disponível acima.':'');
+    document.getElementById('es2').style.display='block';
     document.getElementById('gbr').style.display='flex';
-    serr(`Parte 1 gerada com sucesso! Erro na Parte 2 (planos de aula): ${err.message}<br>O resultado parcial está disponível acima. Tente clicar em Gerar novamente para a Parte 2.`);
   }
 }
 
-function serr(m){document.getElementById('em').innerHTML=m;document.getElementById('es2').style.display='block';document.getElementById('gbr').style.display='flex';}
+// ── OUTPUT ─────────────────────────────────────────
+function cp(){navigator.clipboard.writeText(document.getElementById('ob').textContent).then(function(){var b=document.querySelectorAll('.bsm')[0];b.innerHTML='<i class="ti ti-check"></i> Copiado!';setTimeout(function(){b.innerHTML='<i class="ti ti-copy"></i> Copiar';},2500);});}
+function dl(){var txt=document.getElementById('ob').textContent,nm=(A.sun||'planejamento').replace(/[^a-zA-Z0-9\u00C0-\u024F\s]/g,'').replace(/\s+/g,'_').substring(0,50);var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));a.download='Planejamento_'+nm+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.txt';a.click();}
+function nuc(){A.su=null;document.getElementById('os').style.display='none';document.getElementById('es2').style.display='none';document.getElementById('gbr').style.display='flex';document.getElementById('ucm').value='';document.querySelectorAll('.ucc').forEach(function(c){c.classList.remove('sl');});gp(1);}
+function rh(){var el=document.getElementById('hc');if(!A.hist.length){el.innerHTML='<div class="es"><i class="ti ti-file-off"></i>Nenhum planejamento gerado ainda.</div>';return;}el.innerHTML=A.hist.map(function(h,i){return '<div class="hi" onclick="vh('+i+')"><div><div class="hun">'+h.uc+'</div><div class="hmt">'+(h.curso||'Curso não informado')+' · '+h.ts+'</div></div><i class="ti ti-eye" style="font-size:18px;color:var(--tx3)"></i></div>';}).join('');}
+function vh(i){var h=A.hist[i];document.getElementById('ob').textContent=h.out;document.getElementById('os').style.display='block';document.getElementById('gbr').style.display='none';gp(3);}
 
-// ── GERADOR DE WORD ─────────────────────────────────
-function parsearAulas(txt) {
-  // Extrai blocos de aula do texto gerado pelo Gemini
-  const aulas = [];
-  const blocos = txt.split(/╔[═]+/);
-  
-  blocos.forEach(bloco => {
-    if (!bloco.includes('AULA') || !bloco.includes('╚')) return;
-    
-    const aula = {};
-    
-    // Título da aula
-    const tituloMatch = bloco.match(/AULA\s+\d+\s+de\s+\d+\s+[—–-]+\s*([^
-]+)/i) ||
-                        bloco.match(/AULA\s+\d+\s+[—–-]+\s*([^
-]+)/i);
-    aula.titulo = tituloMatch ? tituloMatch[1].trim().replace(/╚.*$/,'').trim() : 'Aula';
-    
-    // CH e modalidade
-    const chMatch = bloco.match(/CH:\s*([^\|]+)/i);
-    aula.ch = chMatch ? chMatch[1].trim() : '4h';
-    const modMatch = bloco.match(/Modalidade:\s*([^
-]+)/i);
-    aula.modalidade = modMatch ? modMatch[1].trim() : 'Presencial';
-    
-    // Campos principais
-    const campos = [
-      { key: 'indicadores', pattern: /Indicadores\s+trabalhados?:\s*([^
-]+(?:
-(?![A-ZÁÉÍÓÚÀÃÂÊÔÇ][a-záéíóúàãâêôç])[^
-]*)*)/i },
-      { key: 'conhecimentos', pattern: /Conhecimentos?:\s*([\s\S]*?)(?=
-Habilidades?:|$)/i },
-      { key: 'habilidades', pattern: /Habilidades?:\s*([\s\S]*?)(?=
-Atitudes?:|$)/i },
-      { key: 'atitudes', pattern: /Atitudes?:\s*([\s\S]*?)(?=
-Objetivo|$)/i },
-      { key: 'objetivo', pattern: /Objetivo\s+da\s+aula:\s*([\s\S]*?)(?=
-Situa|$)/i },
-      { key: 'situacao', pattern: /Situa[çc][aã]o\s+de\s+aprendizagem:\s*([\s\S]*?)(?=
-Metodologia|$)/i },
-      { key: 'metodologia', pattern: /Metodologia\s+ativa:\s*([\s\S]*?)(?=
-Recursos|$)/i },
-      { key: 'recursos', pattern: /Recursos\s+necess[aá]rios:\s*([\s\S]*?)(?=
-DESENVOLVIMENTO|$)/i },
-      { key: 'produto', pattern: /Produto\s+esperado:\s*([\s\S]*?)(?=
-Instrumentos|$)/i },
-      { key: 'instrumentos', pattern: /Instrumentos\s+de\s+acompanhamento:\s*([\s\S]*?)(?=
-Evid[eê]ncias|$)/i },
-      { key: 'evidencias', pattern: /Evid[eê]ncias\s+de\s+aprendizagem:\s*([\s\S]*?)(?=
-Crit[eé]rios|$)/i },
-      { key: 'criterios', pattern: /Crit[eé]rios\s+observ[aá]veis:\s*([\s\S]*?)(?=
-Orienta|$)/i },
-      { key: 'orientacoes', pattern: /Orienta[çc][oõ]es\s+ao\s+docente:\s*([\s\S]*?)(?=
-Poss[ií]veis|$)/i },
-      { key: 'dificuldades', pattern: /Poss[ií]veis\s+dificuldades?:\s*([\s\S]*?)(?=
-Estrat[eé]gias|$)/i },
-      { key: 'reflexao', pattern: /Perguntas?\s+para\s+reflex[aã]o:\s*([\s\S]*?)(?=
-Checklist|$)/i },
-      { key: 'checklist', pattern: /Checklist\s+docente:\s*([\s\S]*?)(?=╚|$)/i },
-    ];
-    
-    campos.forEach(({ key, pattern }) => {
-      const m = bloco.match(pattern);
-      aula[key] = m ? m[1].trim().replace(/╚[═]*/,'').trim() : '';
-    });
-    
-    // Desenvolvimento
-    aula.desenvolvimento = {};
-    const devBlock = bloco.match(/DESENVOLVIMENTO[^:]*:([\s\S]*?)(?=Produto\s+esperado:|$)/i);
-    if (devBlock) {
-      const db = devBlock[1];
-      const devCampos = [
-        { key: 'acolhimento', pattern: /Acolhimento[^:]*:\s*([^
-•▸]+(?:
-(?![•▸])[^
-]*)*)/i },
-        { key: 'mobilizacao', pattern: /Mobiliza[çc][aã]o[^:]*:\s*([^
-•▸]+(?:
-(?![•▸])[^
-]*)*)/i },
-        { key: 'desenvolvimento', pattern: /Desenvolvimento[^:]*:\s*([^
-•▸]+(?:
-(?![•▸])[^
-]*)*)/i },
-        { key: 'pratica', pattern: /Pr[aá]tica[^:]*:\s*([^
-•▸]+(?:
-(?![•▸])[^
-]*)*)/i },
-        { key: 'sistematizacao', pattern: /Sistematiza[çc][aã]o[^:]*:\s*([^
-•▸]+(?:
-(?![•▸])[^
-]*)*)/i },
-        { key: 'encerramento', pattern: /Encerramento[^:]*:\s*([^
-•▸]+(?:
-(?![•▸])[^
-]*)*)/i },
-      ];
-      devCampos.forEach(({ key, pattern }) => {
-        const m = db.match(pattern);
-        aula.desenvolvimento[key] = m ? m[1].trim() : '';
-      });
+// ── API KEY ────────────────────────────────────────
+function sk(){var k=document.getElementById('ak').value.trim();if(!k){alert('Digite a chave.');return;}A.key=k;localStorage.setItem('gk',k);document.getElementById('ks').innerHTML='<span style="color:var(--stx)"><i class="ti ti-circle-check"></i> Salva com sucesso!</span>';}
+function ck2(){A.key='';localStorage.removeItem('gk');document.getElementById('ak').value='';document.getElementById('ks').innerHTML='<span style="color:var(--wtx)">Chave removida.</span>';}
+function tk(){var i=document.getElementById('ak'),ic=document.getElementById('ei');i.type=i.type==='password'?'text':'password';ic.className=i.type==='password'?'ti ti-eye':'ti ti-eye-off';}
+
+// ── WORD EXPORT ────────────────────────────────────
+async function gerarWord(){
+  var btn=document.getElementById('bw');
+  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader"></i> Gerando...';
+  try{
+    if(!window.docx){
+      await new Promise(function(res,rej){var s=document.createElement('script');s.src='https://unpkg.com/docx@8.5.0/build/index.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});
     }
-    
-    if (aula.titulo && aula.titulo.length > 2) aulas.push(aula);
+    var D=window.docx,txt=document.getElementById('ob').textContent;
+    var aulas=parsearAulas(txt);
+    if(!aulas.length){alert('Não foi possível extrair os planos de aula. Verifique se a geração foi completa.');return;}
+    await gerarWordBrowser(aulas,D);
+  }catch(e){alert('Erro ao gerar Word: '+e.message);}
+  btn.disabled=false;btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word';
+}
+
+function parsearAulas(txt){
+  var aulas=[],blocos=txt.split(/╔[═]+/);
+  blocos.forEach(function(bloco){
+    if(!bloco.includes('AULA')||!bloco.includes('╚'))return;
+    var a={};
+    var tm=bloco.match(/AULA\s+\d+\s+de\s+\d+\s*[—–-]+\s*([^\n]+)/i);
+    a.titulo=tm?tm[1].trim().replace(/╚.*/,'').trim():'Aula';
+    var chm=bloco.match(/CH:\s*([^\|]+)/i);a.ch=chm?chm[1].trim():'4h';
+    var mm=bloco.match(/Modalidade:\s*([^\n]+)/i);a.modalidade=mm?mm[1].trim():'Presencial';
+    var campos=[
+      {k:'indicadores',p:/Indicadores[^:]*:\s*([^\n]+)/i},
+      {k:'conhecimentos',p:/Conhecimentos?:\s*([\s\S]*?)(?=\nHabilidades?:|$)/i},
+      {k:'habilidades',p:/Habilidades?:\s*([\s\S]*?)(?=\nAtitudes?:|$)/i},
+      {k:'atitudes',p:/Atitudes?:\s*([\s\S]*?)(?=\nObjetivo|$)/i},
+      {k:'objetivo',p:/Objetivo[^:]*:\s*([\s\S]*?)(?=\nSitua|$)/i},
+      {k:'situacao',p:/Situa[çc][aã]o[^:]*:\s*([\s\S]*?)(?=\nMetodologia|$)/i},
+      {k:'metodologia',p:/Metodologia[^:]*:\s*([\s\S]*?)(?=\nRecursos|$)/i},
+      {k:'produto',p:/Produto[^:]*:\s*([\s\S]*?)(?=\nInstrumentos|$)/i},
+      {k:'instrumentos',p:/Instrumentos[^:]*:\s*([\s\S]*?)(?=\nEvid|$)/i},
+      {k:'evidencias',p:/Evid[eê]ncias[^:]*:\s*([\s\S]*?)(?=\nCrit|$)/i},
+      {k:'criterios',p:/Crit[eé]rios[^:]*:\s*([\s\S]*?)(?=\nOrienta|$)/i},
+      {k:'orientacoes',p:/Orienta[çc][oõ]es[^:]*:\s*([\s\S]*?)(?=\nPoss|$)/i},
+      {k:'reflexao',p:/Perguntas?[^:]*:\s*([\s\S]*?)(?=\nChecklist|$)/i},
+      {k:'checklist',p:/Checklist[^:]*:\s*([\s\S]*?)(?=╚|$)/i},
+    ];
+    campos.forEach(function(c){var m=bloco.match(c.p);a[c.k]=m?m[1].trim().replace(/╚[═]*/,'').trim():'';});
+    a.desenvolvimento={};
+    var db=bloco.match(/DESENVOLVIMENTO[^:]*:([\s\S]*?)(?=Produto|$)/i);
+    if(db){
+      var dv=db[1];
+      [{k:'acolhimento',p:/Acolhimento[^:]*:\s*([^\n•▸]+)/i},{k:'mobilizacao',p:/Mobiliza[çc][aã]o[^:]*:\s*([^\n•▸]+)/i},{k:'desenvolvimento',p:/Desenvolvimento[^:]*:\s*([^\n•▸]+)/i},{k:'pratica',p:/Pr[aá]tica[^:]*:\s*([^\n•▸]+)/i},{k:'sistematizacao',p:/Sistematiza[çc][aã]o[^:]*:\s*([^\n•▸]+)/i},{k:'encerramento',p:/Encerramento[^:]*:\s*([^\n•▸]+)/i}].forEach(function(c){var m=dv.match(c.p);a.desenvolvimento[c.k]=m?m[1].trim():'';});
+    }
+    if(a.titulo&&a.titulo.length>2)aulas.push(a);
   });
-  
   return aulas;
 }
 
-async function gerarWord() {
-  const btn = document.getElementById('btnWord');
-  const txtFull = document.getElementById('ob').textContent;
-  if (!txtFull) { alert('Gere o planejamento primeiro.'); return; }
-  
-  btn.disabled = true;
-  btn.innerHTML = '<i class="ti ti-loader"></i> Gerando Word...';
-  
-  const aulas = parsearAulas(txtFull);
-  
-  if (aulas.length === 0) {
-    alert('Não foi possível extrair os planos de aula do texto. Verifique se a geração foi completa.');
-    btn.disabled = false;
-    btn.innerHTML = '<i class="ti ti-file-word"></i> Baixar Word (.docx)';
-    return;
-  }
-  
-  // Enviar para o servidor local de geração de Word
-  // Como é arquivo local, vamos usar a API do Gemini para estruturar os dados
-  // e depois usar docx.js via CDN para gerar o Word no browser
-  
-  try {
-    await gerarWordBrowser(aulas);
-  } catch(e) {
-    console.error(e);
-    alert('Erro ao gerar Word: ' + e.message);
-  }
-  
-  btn.disabled = false;
-  btn.innerHTML = '<i class="ti ti-file-word"></i> Baixar Word (.docx)';
-}
-
-async function gerarWordBrowser(aulas) {
-  // Importa docx via CDN (unpkg)
-  if (!window.docx) {
-    await new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = 'https://unpkg.com/docx@8.5.0/build/index.js';
-      s.onload = resolve;
-      s.onerror = reject;
-      document.head.appendChild(s);
-    });
-  }
-  
-  const {
-    Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-    AlignmentType, BorderStyle, WidthType, ShadingType, VerticalAlign, PageBreak, PageOrientation
-  } = window.docx;
-
-  const AZUL = "1F3864"; const LARANJA = "E05A1A"; const CINZA = "D6DCE4";
-  const CINZA2 = "F2F2F2"; const BRANCO = "FFFFFF";
-  
-  const brd = (c="AAAAAA",s=4)=>({style:BorderStyle.SINGLE,size:s,color:c});
-  const brdNorm = {top:brd(),bottom:brd(),left:brd(),right:brd()};
-  const brdAzul = {top:brd(AZUL,8),bottom:brd(AZUL,8),left:brd(AZUL,8),right:brd(AZUL,8)};
-
-  const ucNome = A.sun || 'Unidade Curricular';
-  const cursoNome = A.cn || 'Curso';
-  const eixoNome = A.ex || 'Eixo';
-  
-  const txt = (t, opts={}) => new TextRun({
-    text: t||'', bold:opts.b||false, size:opts.s||22, font:'Arial',
-    color:opts.c||'000000', italics:opts.i||false
+async function gerarWordBrowser(aulas,D){
+  var AZ='1F3864',OR='E05A1A',CZ='D6DCE4',CZ2='F2F2F2',BR='FFFFFF';
+  var brd=function(c,s){return{style:D.BorderStyle.SINGLE,size:s||4,color:c||'AAAAAA'};};
+  var brdN={top:brd(),bottom:brd(),left:brd(),right:brd()};
+  var brdA={top:brd(AZ,8),bottom:brd(AZ,8),left:brd(AZ,8),right:brd(AZ,8)};
+  var tx=function(t,o){o=o||{};return new D.TextRun({text:t||'',bold:o.b,size:o.s||22,font:'Arial',color:o.c||'000000',italics:o.i});};
+  var pr=function(t,o){o=o||{};return new D.Paragraph({children:[tx(t,o)],alignment:o.al||D.AlignmentType.LEFT,spacing:{before:o.sb||60,after:o.sa||60}});};
+  var cl=function(ch,o){o=o||{};return new D.TableCell({borders:o.brd||brdN,width:o.w?{size:o.w,type:D.WidthType.DXA}:undefined,columnSpan:o.sp||1,shading:o.bg?{fill:o.bg,type:D.ShadingType.CLEAR}:undefined,margins:{top:80,bottom:80,left:120,right:120},verticalAlign:D.VerticalAlign.TOP,children:Array.isArray(ch)?ch:[ch]});};
+  var secR=function(l,v){return new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[2800,11600],rows:[new D.TableRow({children:[cl(pr(l,{b:true,c:AZ,s:20}),{bg:CZ,w:2800}),cl(pr(v||'',{s:20}),{w:11600})]})]});};
+  var ch=[];
+  ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[14400],rows:[new D.TableRow({children:[cl([pr('PLANEJAMENTO PEDAGÓGICO SENAC',{b:true,s:32,c:BR,al:D.AlignmentType.CENTER,sb:160,sa:80}),pr(A.cn||'',{b:true,s:26,c:BR,al:D.AlignmentType.CENTER,sb:0,sa:60}),pr(A.sun||'',{s:22,c:BR,al:D.AlignmentType.CENTER,sb:0,sa:160})],{bg:AZ,brd:brdA,w:14400})]})]},),pr(''));
+  aulas.forEach(function(aula,idx){
+    ch.push(new D.Paragraph({children:[new D.PageBreak()]}));
+    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[14400],rows:[new D.TableRow({children:[cl([pr('AULA '+(idx+1)+' de '+aulas.length+'  |  '+(aula.titulo||''),{b:true,s:26,c:BR,al:D.AlignmentType.CENTER,sb:120,sa:60}),pr(A.sun||'',{s:20,c:BR,al:D.AlignmentType.CENTER,sb:0,sa:120})],{bg:AZ,brd:brdA,w:14400})]})]},),pr(''));
+    if(aula.situacao)ch.push(secR('Situação de Aprendizagem',aula.situacao),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[2880,2880,2880,2880,2880],rows:[new D.TableRow({children:[cl(pr('CH',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Modalidade',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Metodologia',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Indicadores',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Produto',{b:true,s:20,c:BR}),{bg:OR})]}),new D.TableRow({children:[cl(pr(aula.ch||'',{s:20}),{bg:CZ2}),cl(pr(aula.modalidade||'',{s:20}),{bg:CZ2}),cl(pr(aula.metodologia||'',{s:19}),{bg:CZ2}),cl(pr(aula.indicadores||'',{s:20}),{bg:CZ2}),cl(pr(aula.produto||'',{s:19}),{bg:CZ2})]})]}),pr(''));
+    if(aula.objetivo)ch.push(secR('Objetivo',aula.objetivo),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[4800,4800,4800],rows:[new D.TableRow({children:[cl(pr('Conhecimentos',{b:true,s:20,c:BR}),{bg:AZ}),cl(pr('Habilidades',{b:true,s:20,c:BR}),{bg:AZ}),cl(pr('Atitudes',{b:true,s:20,c:BR}),{bg:AZ})]}),new D.TableRow({children:[cl(pr(aula.conhecimentos||'',{s:19}),{bg:CZ2}),cl(pr(aula.habilidades||'',{s:19}),{bg:CZ2}),cl(pr(aula.atitudes||'',{s:19}),{bg:CZ2})]})]}),pr(''));
+    var dev=aula.desenvolvimento||{};
+    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[3200,11200],rows:[new D.TableRow({children:[cl(pr('DESENVOLVIMENTO',{b:true,s:22,c:BR,al:D.AlignmentType.CENTER}),{bg:AZ,sp:2})]})].concat([['Acolhimento (15 min)',dev.acolhimento],['Mobilização (20 min)',dev.mobilizacao],['Desenvolvimento',dev.desenvolvimento],['Prática',dev.pratica],['Sistematização (20 min)',dev.sistematizacao],['Encerramento (15 min)',dev.encerramento]].map(function(r){return new D.TableRow({children:[cl(pr(r[0],{b:true,s:20,c:AZ}),{bg:CZ,w:3200}),cl(pr(r[1]||'',{s:20}),{w:11200})]});}))},),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[4800,4800,4800],rows:[new D.TableRow({children:[cl(pr('Evidências',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Critérios',{b:true,s:20,c:BR}),{bg:OR}),cl(pr('Instrumentos',{b:true,s:20,c:BR}),{bg:OR})]}),new D.TableRow({children:[cl(pr(aula.evidencias||'',{s:19}),{bg:CZ2}),cl(pr(aula.criterios||'',{s:19}),{bg:CZ2}),cl(pr(aula.instrumentos||'',{s:19}),{bg:CZ2})]})]}),pr(''));
+    ch.push(new D.Table({width:{size:14400,type:D.WidthType.DXA},columnWidths:[7200,7200],rows:[new D.TableRow({children:[cl([pr('Orientações ao Docente',{b:true,s:20,c:AZ}),pr(aula.orientacoes||'',{s:19})],{bg:CZ2}),cl([pr('Perguntas para Reflexão',{b:true,s:20,c:AZ}),pr(aula.reflexao||'',{s:19})],{bg:CZ2})]})]}),pr(''));
   });
-  
-  const par = (t, opts={}) => new Paragraph({
-    children: [txt(t, opts)],
-    alignment: opts.align || AlignmentType.LEFT,
-    spacing: { before: opts.sb||60, after: opts.sa||60 }
-  });
-  
-  const cel = (children, opts={}) => new TableCell({
-    borders: opts.brd || brdNorm,
-    width: opts.w ? {size:opts.w, type:WidthType.DXA} : undefined,
-    columnSpan: opts.span||1,
-    shading: opts.bg ? {fill:opts.bg, type:ShadingType.CLEAR} : undefined,
-    margins: {top:80,bottom:80,left:120,right:120},
-    verticalAlign: VerticalAlign.TOP,
-    children: Array.isArray(children)?children:[children]
-  });
-
-  const secRows = (label, valor) => new Table({
-    width:{size:14400,type:WidthType.DXA}, columnWidths:[2800,11600],
-    rows:[new TableRow({children:[
-      cel(par(label,{b:true,c:AZUL,s:20}),{bg:CINZA,brd:brdNorm,w:2800}),
-      cel(par(valor||'',{s:20}),{brd:brdNorm,w:11600})
-    ]})]
-  });
-
-  const children = [];
-
-  // ── CAPA ─────────────────────────────────────────
-  children.push(new Table({
-    width:{size:14400,type:WidthType.DXA},columnWidths:[14400],
-    rows:[new TableRow({children:[
-      cel([
-        par('PLANEJAMENTO PEDAGÓGICO SENAC',{b:true,s:32,c:BRANCO,align:AlignmentType.CENTER,sb:160,sa:80}),
-        par(cursoNome,{b:true,s:26,c:BRANCO,align:AlignmentType.CENTER,sb:0,sa:60}),
-        par(ucNome,{s:22,c:BRANCO,align:AlignmentType.CENTER,sb:0,sa:160}),
-      ],{bg:AZUL,brd:brdAzul,w:14400})
-    ]})]
-  }));
-  children.push(par(''));
-  
-  // Info da UC
-  const infoRows = [
-    ['Curso:', cursoNome], ['Eixo Tecnológico:', eixoNome],
-    ['Unidade Curricular:', ucNome], ['Total de Aulas:', `${aulas.length} aulas`],
-    ['Docente:', ''], ['Turma:', ''],
-  ];
-  children.push(new Table({
-    width:{size:14400,type:WidthType.DXA},columnWidths:[3800,10600],
-    rows: infoRows.map(([l,v]) => new TableRow({children:[
-      cel(par(l,{b:true,s:21,c:AZUL}),{bg:CINZA,brd:brdNorm,w:3800}),
-      cel(par(v,{s:21}),{brd:brdNorm,w:10600})
-    ]}))
-  }));
-
-  // ── PLANOS DE AULA ────────────────────────────────
-  aulas.forEach((aula, idx) => {
-    children.push(new Paragraph({children:[new PageBreak()]}));
-    
-    // Cabeçalho da aula
-    children.push(new Table({
-      width:{size:14400,type:WidthType.DXA},columnWidths:[14400],
-      rows:[new TableRow({children:[
-        cel([
-          par(`AULA ${idx+1} de ${aulas.length}  |  ${aula.titulo||''}`,{b:true,s:26,c:BRANCO,align:AlignmentType.CENTER,sb:120,sa:60}),
-          par(ucNome,{s:20,c:BRANCO,align:AlignmentType.CENTER,sb:0,sa:120}),
-        ],{bg:AZUL,brd:brdAzul,w:14400})
-      ]})]
-    }));
-    children.push(par(''));
-    
-    // Situação de aprendizagem
-    if(aula.situacao) children.push(secRows('2. Situação de Aprendizagem', aula.situacao));
-    children.push(par(''));
-    
-    // Informações rápidas
-    children.push(new Table({
-      width:{size:14400,type:WidthType.DXA},columnWidths:[2880,2880,2880,2880,2880],
-      rows:[
-        new TableRow({children:[
-          cel(par('CH',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:2880}),
-          cel(par('Modalidade',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:2880}),
-          cel(par('Metodologia',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:2880}),
-          cel(par('Indicadores',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:2880}),
-          cel(par('Produto Esperado',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:2880}),
-        ]}),
-        new TableRow({children:[
-          cel(par(aula.ch||'4h',{s:20}),{bg:CINZA2,brd:brdNorm,w:2880}),
-          cel(par(aula.modalidade||'Presencial',{s:20}),{bg:CINZA2,brd:brdNorm,w:2880}),
-          cel(par(aula.metodologia||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:2880}),
-          cel(par(aula.indicadores||'',{s:20}),{bg:CINZA2,brd:brdNorm,w:2880}),
-          cel(par(aula.produto||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:2880}),
-        ]}),
-      ]
-    }));
-    children.push(par(''));
-    
-    // Objetivo
-    if(aula.objetivo) children.push(secRows('Objetivo', aula.objetivo));
-    children.push(par(''));
-    
-    // CHA
-    children.push(par('4. Elementos da Competência Mobilizados',{b:true,s:22,c:AZUL}));
-    children.push(new Table({
-      width:{size:14400,type:WidthType.DXA},columnWidths:[4800,4800,4800],
-      rows:[
-        new TableRow({children:[
-          cel(par('Conhecimentos',{b:true,s:20,c:BRANCO}),{bg:AZUL,brd:brdNorm,w:4800}),
-          cel(par('Habilidades',{b:true,s:20,c:BRANCO}),{bg:AZUL,brd:brdNorm,w:4800}),
-          cel(par('Atitudes',{b:true,s:20,c:BRANCO}),{bg:AZUL,brd:brdNorm,w:4800}),
-        ]}),
-        new TableRow({children:[
-          cel(par(aula.conhecimentos||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:4800}),
-          cel(par(aula.habilidades||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:4800}),
-          cel(par(aula.atitudes||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:4800}),
-        ]}),
-      ]
-    }));
-    children.push(par(''));
-    
-    // Desenvolvimento
-    const dev = aula.desenvolvimento||{};
-    const momentos = [
-      ['Acolhimento (15 min)', dev.acolhimento],
-      ['Mobilização (20 min)', dev.mobilizacao],
-      ['Desenvolvimento', dev.desenvolvimento],
-      ['Prática', dev.pratica],
-      ['Sistematização (20 min)', dev.sistematizacao],
-      ['Encerramento (15 min)', dev.encerramento],
-    ];
-    children.push(new Table({
-      width:{size:14400,type:WidthType.DXA},columnWidths:[3200,11200],
-      rows:[
-        new TableRow({children:[
-          cel(par('DESENVOLVIMENTO DA AULA',{b:true,s:22,c:BRANCO,align:AlignmentType.CENTER}),{bg:AZUL,brd:brdNorm,w:14400,span:2})
-        ]}),
-        ...momentos.map(([l,v])=>new TableRow({children:[
-          cel(par(l,{b:true,s:20,c:AZUL}),{bg:CINZA,brd:brdNorm,w:3200}),
-          cel(par(v||'',{s:20}),{brd:brdNorm,w:11200}),
-        ]}))
-      ]
-    }));
-    children.push(par(''));
-    
-    // Avaliação
-    children.push(par('6. Avaliação',{b:true,s:22,c:AZUL}));
-    children.push(new Table({
-      width:{size:14400,type:WidthType.DXA},columnWidths:[4800,4800,4800],
-      rows:[
-        new TableRow({children:[
-          cel(par('Evidências de Aprendizagem',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:4800}),
-          cel(par('Critérios Observáveis',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:4800}),
-          cel(par('Instrumentos',{b:true,s:20,c:BRANCO}),{bg:LARANJA,brd:brdNorm,w:4800}),
-        ]}),
-        new TableRow({children:[
-          cel(par(aula.evidencias||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:4800}),
-          cel(par(aula.criterios||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:4800}),
-          cel(par(aula.instrumentos||'',{s:19}),{bg:CINZA2,brd:brdNorm,w:4800}),
-        ]}),
-      ]
-    }));
-    children.push(par(''));
-    
-    // Orientações e reflexão
-    children.push(new Table({
-      width:{size:14400,type:WidthType.DXA},columnWidths:[7200,7200],
-      rows:[new TableRow({children:[
-        cel([par('Orientações ao Docente',{b:true,s:20,c:AZUL}), par(aula.orientacoes||'',{s:19})],{bg:CINZA2,brd:brdNorm,w:7200}),
-        cel([par('Perguntas para Reflexão',{b:true,s:20,c:AZUL}), par(aula.reflexao||'',{s:19})],{bg:CINZA2,brd:brdNorm,w:7200}),
-      ]})]
-    }));
-    children.push(par(''));
-  });
-
-  // Gerar e baixar
-  const doc = new Document({
-    styles:{ default:{ document:{ run:{ font:'Arial', size:22 } } } },
-    sections:[{
-      properties:{ page:{ size:{width:16838,height:11906}, margin:{top:720,right:720,bottom:720,left:720}, orientation:PageOrientation.LANDSCAPE }},
-      children
-    }]
-  });
-
-  const blob = await Packer.toBlob(doc);
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const nm = (A.sun||'planejamento').replace(/[^a-zA-Z0-9\u00C0-\u024F\s]/g,'').replace(/\s+/g,'_').substring(0,50);
-  a.href = url;
-  a.download = `Planos_de_Aula_${nm}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.docx`;
-  a.click();
+  var doc=new D.Document({styles:{default:{document:{run:{font:'Arial',size:22}}}},sections:[{properties:{page:{size:{width:16838,height:11906},margin:{top:720,right:720,bottom:720,left:720},orientation:D.PageOrientation.LANDSCAPE}},children:ch}]});
+  var blob=await D.Packer.toBlob(doc);
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  var nm=(A.sun||'planejamento').replace(/[^a-zA-Z0-9\u00C0-\u024F\s]/g,'').replace(/\s+/g,'_').substring(0,50);
+  a.href=url;a.download='Planos_'+nm+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.docx';a.click();
   URL.revokeObjectURL(url);
 }
-// ──────────────────────────────────────────────────
 
-function cp(){
-  navigator.clipboard.writeText(document.getElementById('ob').textContent).then(()=>{
-    const b=document.querySelectorAll('.bsm')[0];b.innerHTML='<i class="ti ti-check"></i> Copiado!';setTimeout(()=>{b.innerHTML='<i class="ti ti-copy"></i> Copiar';},2500);
-  });
-}
-
-function dl(){
-  const txt=document.getElementById('ob').textContent;
-  const nm=(A.sun||'planejamento').replace(/[^a-zA-Z0-9\u00C0-\u024F\s]/g,'').replace(/\s+/g,'_').substring(0,60);
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
-  a.download=`Planejamento_${nm}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.txt`;a.click();
-}
-
-function nuc(){
-  A.su=null;document.getElementById('os').style.display='none';document.getElementById('es2').style.display='none';document.getElementById('gbr').style.display='flex';
-  document.getElementById('ucm').value='';document.querySelectorAll('.ucc').forEach(c=>c.classList.remove('sl'));gp(1);
-}
-
-function rh(){
-  const el=document.getElementById('hc');
-  if(!A.hist.length){el.innerHTML='<div class="es"><i class="ti ti-file-off"></i>Nenhum planejamento gerado ainda nesta sessão.</div>';return;}
-  el.innerHTML=A.hist.map((h,i)=>`<div class="hi" onclick="vh(${i})"><div><div class="hun">${h.uc}</div><div class="hmt">${h.curso||'Curso não informado'} &bull; ${h.ts}</div></div><i class="ti ti-eye" style="font-size:18px;color:var(--tx3)"></i></div>`).join('');
-}
-
-function vh(i){const h=A.hist[i];document.getElementById('ob').textContent=h.out;document.getElementById('os').style.display='block';document.getElementById('gbr').style.display='none';gp(3);}
-
-function sk(){const k=document.getElementById('ak').value.trim();if(!k){alert('Digite a chave antes de salvar.');return;}A.key=k;localStorage.setItem('gk',k);document.getElementById('ks').innerHTML='<span style="color:var(--stx)"><i class="ti ti-circle-check"></i> Chave salva com sucesso! Pronta para uso.</span>';}
-function ck(){A.key='';localStorage.removeItem('gk');document.getElementById('ak').value='';document.getElementById('ks').innerHTML='<span style="color:var(--wtx)"><i class="ti ti-alert-triangle"></i> Chave removida.</span>';}
-function tk(){const i=document.getElementById('ak');const ic=document.getElementById('ei');i.type=i.type==='password'?'text':'password';ic.className=i.type==='password'?'ti ti-eye':'ti ti-eye-off';}
 ca();
-
-// ── DRAG-DROP E UPLOAD DE ARQUIVO ─────────────────
-function dzOver(e){e.preventDefault();var d=document.getElementById('dropzone');d.style.borderColor='var(--or)';d.style.background='var(--orl)';}
-function dzLeave(e){var d=document.getElementById('dropzone');d.style.borderColor='var(--bds)';d.style.background='var(--sv2)';}
-function dzDrop(e){e.preventDefault();dzLeave(e);var f=e.dataTransfer.files[0];if(f)processarArquivo(f);}
-function onFileIn(e){var f=e.target.files[0];if(f)processarArquivo(f);}
-function onDropTA(e){e.preventDefault();var f=e.dataTransfer.files[0];if(f)processarArquivo(f);}
-
-function fstMsg(msg,ok){var el=document.getElementById('fst');el.style.display='block';el.style.color=ok?'var(--stx)':'var(--wtx)';el.textContent=msg;}
-
-function processarArquivo(file){
-  var nm=file.name.toLowerCase();
-  fstMsg('Carregando: '+file.name+'...',true);
-  
-  if(nm.endsWith('.txt')){
-    var r=new FileReader();
-    r.onload=function(e){
-      document.getElementById('po').value=e.target.result;
-      atualizarContador();
-      fstMsg('✓ '+file.name+' ('+e.target.result.length.toLocaleString()+' caracteres)',true);
-    };
-    r.onerror=function(){fstMsg('Erro ao ler arquivo.',false);};
-    r.readAsText(file,'UTF-8');
-  }
-  else if(nm.endsWith('.pdf')){
-    if(!window.pdfjsLib){
-      var s=document.createElement('script');
-      s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-      s.onload=function(){
-        pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        lerPDF(file);
-      };
-      document.head.appendChild(s);
-    } else { lerPDF(file); }
-  }
-  else if(nm.endsWith('.docx')||nm.endsWith('.doc')){
-    if(!window.mammoth){
-      var s=document.createElement('script');
-      s.src='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js';
-      s.onload=function(){lerDOCX(file);};
-      document.head.appendChild(s);
-    } else { lerDOCX(file); }
-  }
-  else { fstMsg('Use .txt, .pdf ou .docx',false); }
-}
-
-function lerPDF(file){
-  var r=new FileReader();
-  r.onload=function(ev){
-    var data=new Uint8Array(ev.target.result);
-    pdfjsLib.getDocument({data:data}).promise.then(function(pdf){
-      var txts=[]; var total=pdf.numPages; var lidas=0;
-      for(var i=1;i<=total;i++){
-        (function(pn){
-          pdf.getPage(pn).then(function(pg){
-            pg.getTextContent().then(function(tc){
-              txts[pn-1]=tc.items.map(function(it){return it.str;}).join(' ');
-              lidas++;
-              if(lidas===total){
-                var txt=txts.join('\n');
-                document.getElementById('po').value=txt;
-                atualizarContador();
-                fstMsg('✓ PDF: '+total+' páginas ('+txt.length.toLocaleString()+' chars)',true);
-              }
-            });
-          });
-        })(i);
-      }
-    }).catch(function(e){fstMsg('Erro PDF: '+e.message,false);});
-  };
-  r.readAsArrayBuffer(file);
-}
-
-function lerDOCX(file){
-  var r=new FileReader();
-  r.onload=function(ev){
-    mammoth.extractRawText({arrayBuffer:ev.target.result}).then(function(res){
-      document.getElementById('po').value=res.value;
-      atualizarContador();
-      fstMsg('✓ Documento: '+res.value.length.toLocaleString()+' caracteres',true);
-    }).catch(function(e){fstMsg('Erro DOCX: '+e.message,false);});
-  };
-  r.readAsArrayBuffer(file);
-}
-
-// ──────────────────────────────────────────────────
-
-// Attach all events to textarea after DOM loads
-document.addEventListener('DOMContentLoaded', function(){
-  var po = document.getElementById('po');
-  if(!po) return;
-  
-  function sync(){
-    setTimeout(function(){
-      atualizarContador();
-    }, 30);
-  }
-  
-  po.addEventListener('input',   sync);
-  po.addEventListener('change',  sync);
-  po.addEventListener('keyup',   sync);
-  po.addEventListener('paste',   sync);
-  po.addEventListener('cut',     sync);
-  po.addEventListener('drop',    sync);
-  po.addEventListener('blur',    sync);
-  po.addEventListener('focus',   sync);
-  
-  // Poll every 300ms as ultimate fallback
-  setInterval(function(){
-    var v = po.value || '';
-    var cc = document.getElementById('cc');
-    if(cc && v.length > 0){
-      cc.textContent = v.length.toLocaleString() + ' caracteres';
-      cc.style.color = v.length > 500 ? 'var(--stx)' : 'var(--or)';
-    }
-  }, 300);
-});
 </script>
 </body>
 </html>
