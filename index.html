@@ -335,26 +335,42 @@ window.onload=function(){
     var w=document.createElement('div');
     w.className='al alw';
     w.innerHTML='<i class="ti ti-key"></i><div>Configure sua chave gratuita em <strong>API Key Gemini</strong> antes de gerar.</div>';
-    document.querySelector('#p0 .ph').after(w);
+    var ph=document.querySelector('#p0 .ph');
+    if(ph) ph.after(w);
   }
 
-  // ── TEXTAREA EVENTS (attached via JS, not HTML) ─
-  var po=document.getElementById('po');
-  function sync(){ 
-    var v=po.value||'';
-    A.po=v.trim();
-    var cc=document.getElementById('cc');
-    cc.textContent=v.length.toLocaleString()+' caracteres';
-    cc.className='cc'+(v.length>500?' ok':'');
+  // Counter update function - called multiple ways
+  function updateCounter(){
+    var po = document.getElementById('po');
+    var cc = document.getElementById('cc');
+    if(!po || !cc) return;
+    var v = po.value || '';
+    cc.textContent = v.length.toLocaleString('pt-BR') + ' caracteres';
+    cc.style.color = v.length > 500 ? 'var(--stx)' : 'var(--or)';
+    A.po = v.trim(); // Always keep A.po in sync
   }
-  ['input','change','keyup','keydown','paste','cut','drop','click','focus','blur','mouseup'].forEach(function(ev){
-    po.addEventListener(ev,function(){ setTimeout(sync,20); });
-  });
-  // Interval fallback — reads value every 200ms regardless of events
-  setInterval(sync,200);
+
+  // Attach to textarea via addEventListener (more reliable than inline)
+  var po = document.getElementById('po');
+  if(po){
+    po.addEventListener('input', updateCounter);
+    po.addEventListener('change', updateCounter);
+    po.addEventListener('keyup', updateCounter);
+    po.addEventListener('paste', function(){ setTimeout(updateCounter, 10); setTimeout(updateCounter, 100); setTimeout(updateCounter, 500); });
+    po.addEventListener('drop', function(){ setTimeout(updateCounter, 100); });
+    po.addEventListener('blur', updateCounter);
+    po.addEventListener('focus', updateCounter);
+    po.addEventListener('click', updateCounter);
+    po.addEventListener('mouseup', updateCounter);
+    po.addEventListener('touchend', updateCounter);
+  }
+
+  // Nuclear option: poll every 200ms regardless of events
+  setInterval(updateCounter, 200);
 
   ca();
 };
+
 
 // ── NAV ────────────────────────────────────────────
 function gp(i){
@@ -368,17 +384,32 @@ function gp(i){
 
 // ── STEP 0 ─────────────────────────────────────────
 function s0(){
-  // Read directly from DOM every time
-  var po=document.getElementById('po');
-  A.po=(po.value||po.textContent||po.innerText||'').trim();
-  A.cn=(document.getElementById('cn').value||'').trim();
-  A.ex=document.getElementById('ex').value||'';
+  var po = document.getElementById('po');
+  var txt = '';
+  // Try every possible way to get the value
+  if(po){ txt = po.value || po.textContent || po.innerText || ''; }
+  txt = txt.trim();
   
-  if(!A.po){
-    alert('Nenhum texto encontrado!\n\nArraste o arquivo PDF/DOCX do P.O. ou cole o texto com Ctrl+V.');
+  A.po = txt;
+  A.cn = (document.getElementById('cn')||{value:''}).value.trim();
+  A.ex = (document.getElementById('ex')||{value:''}).value || '';
+  
+  if(!txt){
+    alert('Nenhum texto detectado!
+
+O texto "' + (po && po.value ? po.value.substring(0,30) : 'vazio') + '" está no campo mas não foi lido.
+
+Tente: 1) Clicar dentro do campo de texto
+2) Selecionar tudo (Ctrl+A)
+3) Copiar (Ctrl+C)
+4) Colar novamente (Ctrl+V)
+5) Clicar em Continuar');
     return;
   }
-  A.ucs=dUC(A.po);rUCG();gp(1);
+  
+  A.ucs = dUC(A.po);
+  rUCG();
+  gp(1);
 }
 
 // ── DETECT UCs ─────────────────────────────────────
