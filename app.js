@@ -221,7 +221,45 @@ async function gen(){
     si=0;
     var iv2=setInterval(function(){if(si<steps2.length){document.getElementById('lt').textContent=steps2[si][0];document.getElementById('pb').style.width=steps2[si][1]+'%';si++;}},5000);
 
-    var p2=await chamada(key,'Voce e Especialista Senior em Planejamento Pedagogico do SENAC SP. Responda em portugues brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nPLANEJAMENTO (etapas 1-5) JA FEITO:\n'+p1+'\n\nEXECUTE ETAPAS 6-10:\nETAPA 6: Para cada uma das '+nAulas+' aulas, crie situacao contextualizada com: Titulo, Contexto profissional real, Problema, Objetivo, Desenvolvimento, Entrega, Evidencias, Criterios, Indicadores.\nETAPA 7: Para cada aula, indique estrategia do Banco SENAC SP e justifique. Diversifique.\nETAPA 8: Gere TODOS os '+nAulas+' planos de aula. Para cada aula use EXATAMENTE este formato:\n\nAULA [N] de '+nAulas+' | [TITULO]\nCH: [X]h | Modalidade: [Presencial/EaD]\nIndicadores: [numeros]\nConhecimentos: [lista]\nHabilidades: [lista]\nAtitudes: [lista]\nObjetivo: [objetivo]\nSituacao: [situacao]\nMetodologia: [nome]\nRecursos: [lista]\nACOLHIMENTO: [descricao]\nMOBILIZACAO: [descricao]\nDESENVOLVIMENTO: [descricao]\nPRATICA: [descricao]\nSISTEMATIZACAO: [descricao]\nENCERRAMENTO: [descricao]\nPRODUTO: [produto]\nEVIDENCIAS: [evidencias]\nCRITERIOS: [criterios]\nINSTRUMENTOS: [instrumentos]\nORIENTACOES: [orientacoes]\nREFLEXAO: [perguntas]\nCHECKLIST: [checklist]\n---FIM---\n\nETAPA 9: Adapte exemplos ao eixo '+A.ex+'.\nETAPA 10: Auditoria com tabelas de cobertura.');
+    var fmtAula = [
+      'AULA [N] de ' + nAulas + ' | [TITULO]',
+      'CH: [X]h | Modalidade: [Presencial/EaD]',
+      'Indicadores: [numeros]',
+      'Conhecimentos: [lista apenas os conhecimentos]',
+      'Habilidades: [lista apenas as habilidades]',
+      'Atitudes: [lista apenas as atitudes]',
+      'Objetivo: [objetivo em 1-2 frases]',
+      'Situacao: [situacao de aprendizagem]',
+      'Metodologia: [nome da estrategia]',
+      'Recursos: [lista de recursos]',
+      'ACOLHIMENTO: [descricao]',
+      'MOBILIZACAO: [descricao]',
+      'DESENVOLVIMENTO: [descricao]',
+      'PRATICA: [descricao]',
+      'SISTEMATIZACAO: [descricao]',
+      'ENCERRAMENTO: [descricao]',
+      'PRODUTO: [produto esperado]',
+      'EVIDENCIAS: [evidencias]',
+      'CRITERIOS: [criterios observaveis]',
+      'INSTRUMENTOS: [instrumentos]',
+      'ORIENTACOES: [orientacoes ao docente]',
+      'REFLEXAO: [perguntas para reflexao]',
+      'CHECKLIST: [checklist do docente]',
+      '---FIM---'
+    ].join('\n');
+    var promptP2 = 'Especialista em Planejamento Pedagogico SENAC SP.\n\n';
+    promptP2 += 'DADOS: ' + base + '\n\n';
+    promptP2 += 'BANCO SENAC SP: ' + banco + '\n\n';
+    promptP2 += 'P.O.: ' + po.substring(0, 20000) + '\n\n';
+    promptP2 += 'PLANEJAMENTO JA FEITO (etapas 1-5):\n' + p1 + '\n\n';
+    promptP2 += 'EXECUTE ETAPAS 6-10:\n';
+    promptP2 += 'ETAPA 6: Para cada uma das ' + nAulas + ' aulas, crie situacao de aprendizagem contextualizada.\n';
+    promptP2 += 'ETAPA 7: Para cada aula, indique metodologia do Banco SENAC SP com justificativa.\n';
+    promptP2 += 'ETAPA 8: Gere TODOS os ' + nAulas + ' planos de aula usando EXATAMENTE este formato para cada:\n\n';
+    promptP2 += fmtAula + '\n\n';
+    promptP2 += 'ETAPA 9: Adapte ao eixo ' + A.ex + '.\n';
+    promptP2 += 'ETAPA 10: Auditoria com tabelas de cobertura.';
+    var p2=await chamada(key, promptP2);
     clearInterval(iv2);
     document.getElementById('pb').style.width='100%';
     document.getElementById('ldc').style.display='none';
