@@ -170,7 +170,7 @@ input:focus,select:focus{border-color:var(--or)}
       </div>
     </div>
   </div>
-  <div class="br"><button class="bp" id="btnCont" onclick="(function(){ var el=document.getElementById('po'); var v=el?el.value:''; if(!v){alert('Campo vazio! Cole o P.O. e tente novamente.');return;} A.po=v.trim(); A.cn=(document.getElementById('cn')||{}).value||''; A.ex=(document.getElementById('ex')||{}).value||''; A.ucs=dUC(A.po); rUCG(); gp(1); })()"><i class="ti ti-arrow-right"></i> Continuar</button></div>
+  <div class="br"><button class="bp" id="btnCont" onclick="s0()"><i class="ti ti-arrow-right"></i> Continuar</button></div>
 </div>
 
 <!-- P1 -->
@@ -396,15 +396,7 @@ function s0(){
   A.ex = (document.getElementById('ex')||{value:''}).value || '';
   
   if(!txt){
-    alert('Nenhum texto detectado!
-
-O texto "' + (po && po.value ? po.value.substring(0,30) : 'vazio') + '" está no campo mas não foi lido.
-
-Tente: 1) Clicar dentro do campo de texto
-2) Selecionar tudo (Ctrl+A)
-3) Copiar (Ctrl+C)
-4) Colar novamente (Ctrl+V)
-5) Clicar em Continuar');
+    alert('O campo está vazio. Cole o texto do P.O. e clique em Continuar.');
     return;
   }
   
