@@ -1,6 +1,6 @@
-// VERSAO 19 - WORD BATCH
+// VERSAO 20 - RETRY QUOTA
 
-console.log("VERSAO 19 - Word em lotes de 7 aulas");
+console.log("VERSAO 20 - Retry automatico em quota exceeded");
 // ── STATE ──────────────────────────────────────────
 var A={po:'',cn:'',ex:'',ucs:[],su:null,sun:'',hist:[],key:localStorage.getItem('gk')||''};
 
@@ -177,11 +177,30 @@ function lerDOCX(file){
 }
 
 // ── GENERATION ─────────────────────────────────────
-async function chamada(key,prompt){
-  var r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:65536,temperature:0.7}})});
-  var d=await r.json();
-  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
-  if(!d.candidates||!d.candidates[0])throw new Error('Resposta vazia');
+async function sleep(ms){ return new Promise(function(r){setTimeout(r,ms);}); }
+
+async function chamada(key, prompt, tentativa){
+  tentativa = tentativa || 1;
+  var r = await fetch(
+    'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key,
+    { method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({contents:[{parts:[{text:prompt}]}], generationConfig:{maxOutputTokens:65536,temperature:0.7}}) }
+  );
+  var d = await r.json();
+  if(d.error){
+    var msg = d.error.message || JSON.stringify(d.error);
+    if((msg.indexOf('quota')>-1 || msg.indexOf('429')>-1 || msg.indexOf('RESOURCE_EXHAUSTED')>-1) && tentativa<=3){
+      var waitSec = 35;
+      var m = msg.match(/retry in ([\d.]+)s/);
+      if(m) waitSec = Math.ceil(parseFloat(m[1])) + 3;
+      var ltEl = document.getElementById('lt');
+      if(ltEl) ltEl.textContent = 'Limite da API. Aguardando ' + waitSec + 's... (' + tentativa + '/3)';
+      await sleep(waitSec * 1000);
+      return chamada(key, prompt, tentativa + 1);
+    }
+    throw new Error(msg);
+  }
+  if(!d.candidates||!d.candidates[0]) throw new Error('Resposta vazia da API');
   return d.candidates[0].content.parts.map(function(p){return p.text||'';}).join('\n');
 }
 
@@ -218,6 +237,8 @@ async function gen(){
     p1=await chamada(key,'Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda em português brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nEXECUTE ETAPAS 1-5:\nETAPA 1 – RESUMO: UC, CH, Indicadores numerados, Conhecimentos, Habilidades, Atitudes, Evidências, Critérios.\nETAPA 2 – MATRIZ PEDAGÓGICA: Tabela Indicador|Conhecimentos|Habilidades|Atitudes|Evidências. Nenhum sem mapeamento.\nETAPA 3 – COMPLEXIDADE: Para cada conhecimento: nível (Básico/Intermediário/Avançado), justificativa, nº aulas.\nETAPA 4 – DISTRIBUIÇÃO CH: '+tot+'h, '+durT+', '+nAulas+' aulas. Tabela: Nº|Tema|CH|Tipo|Indicadores.\nETAPA 5 – PROGRESSÃO: Sequência lógica justificada das '+nAulas+' aulas. NÃO gere planos de aula ainda.');
     clearInterval(iv);
     document.getElementById('pb').style.width='52%';
+    document.getElementById('lt').textContent = 'Aguardando 5s para evitar limite da API...';
+    await sleep(5000);
     si=0;
     var iv2=setInterval(function(){if(si<steps2.length){document.getElementById('lt').textContent=steps2[si][0];document.getElementById('pb').style.width=steps2[si][1]+'%';si++;}},5000);
 
@@ -331,16 +352,9 @@ async function gerarWord(){
       prompt += '- NAO misture campos\n- Extraia SOMENTE as aulas ' + from + ' a ' + to + '\n\n';
       prompt += 'TEXTO:\n' + txt.substring(0, 55000);
 
-      var resp = await fetch(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key,
-        { method: 'POST', headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ contents: [{parts: [{text: prompt}]}],
-            generationConfig: {maxOutputTokens: 65536, temperature: 0.1} }) }
-      );
-      var data = await resp.json();
-      if(data.error) throw new Error('Gemini: ' + data.error.message);
-
-      var raw = data.candidates[0].content.parts.map(function(p){return p.text||'';}).join('');
+      // Use chamada() with auto-retry for quota errors
+      var raw = await chamada(key, prompt);
+      // chamada returns text directly
       raw = raw.replace(/```json\s*/gi,'').replace(/```\s*/gi,'').trim();
 
       var parsed;
