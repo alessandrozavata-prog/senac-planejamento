@@ -519,7 +519,35 @@ async function gen(){
     si=0;
     var iv2=setInterval(function(){if(si<steps2.length){document.getElementById('lt').textContent=steps2[si][0];document.getElementById('pb').style.width=steps2[si][1]+'%';si++;}},5000);
 
-    var p2=await chamada(key,'Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda em português brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nPLANEJAMENTO (etapas 1-5) JÁ FEITO:\n'+p1+'\n\nEXECUTE ETAPAS 6-10:\nETAPA 6 – SITUAÇÕES: Para cada uma das '+nAulas+' aulas: Título|Contexto real de RH|Problema|Objetivo|Desenvolvimento|Entrega|Evidências|Critérios|Indicadores.\nETAPA 7 – METODOLOGIAS: Para cada aula, estratégia do Banco SENAC SP com justificativa. Diversifique.\nETAPA 8 – TODOS OS '+nAulas+' PLANOS DE AULA. Para cada aula:\n╔══════════════════════════════════\nAULA [N] de '+nAulas+' — [TÍTULO]\nCH: [X]h | [Presencial/EaD]\n══════════════════════════════════\nIndicadores:\nConhecimentos:\nHabilidades:\nAtitudes:\nObjetivo:\nSituação de aprendizagem:\nMetodologia ativa:\nRecursos necessários:\nDESENVOLVIMENTO:\n  • Acolhimento (15min):\n  • Mobilização (20min):\n  • Desenvolvimento:\n  • Prática:\n  • Sistematização (20min):\n  • Encerramento (15min):\nProduto esperado:\nInstrumentos de acompanhamento:\nEvidências de aprendizagem:\nCritérios observáveis:\nOrientações ao docente:\nPossíveis dificuldades:\nEstratégias de intervenção:\nPerguntas para reflexão:\nChecklist docente:\n╚══════════════════════════════════\nETAPA 9 – CONTEXTUALIZAÇÃO: Confirme adaptação ao eixo '+A.ex+'.\nETAPA 10 – AUDITORIA: ✓/✗ com justificativa para cada item. Tabelas de cobertura.');
+    var p2=await chamada(key,'Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda em português brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nPLANEJAMENTO (etapas 1-5) JÁ FEITO:\n'+p1+'\n\nEXECUTE ETAPAS 6-10:\nETAPA 6 – SITUAÇÕES: Para cada uma das '+nAulas+' aulas: Título|Contexto real de RH|Problema|Objetivo|Desenvolvimento|Entrega|Evidências|Critérios|Indicadores.\nETAPA 7 – METODOLOGIAS: Para cada aula, estratégia do Banco SENAC SP com justificativa. Diversifique.\nETAPA 8 – TODOS OS '+nAulas+' PLANOS DE AULA. CRÍTICO: Use EXATAMENTE este formato para cada aula, sem adicionar texto extra depois de cada rótulo antes da próxima linha:
+
+AULA [N] de '+nAulas+' — [TÍTULO DA AULA]
+CH: [X]h | Modalidade: [Presencial/EaD]
+---
+Indicadores trabalhados: [apenas os números, ex: 1, 2]
+Conhecimentos: [liste apenas os conhecimentos desta aula, sem outros campos]
+Habilidades: [liste apenas as habilidades, sem outros campos]
+Atitudes: [liste apenas as atitudes, sem outros campos]
+Objetivo da aula: [apenas o objetivo em 1-2 linhas]
+Situação de aprendizagem: [apenas a situação, em 2-3 linhas]
+Metodologia ativa: [apenas o nome da estratégia]
+Recursos necessários: [lista de recursos]
+DESENVOLVIMENTO DA AULA:
+• Acolhimento (15min): [descrição]
+• Mobilização (20min): [descrição]
+• Desenvolvimento: [descrição]
+• Prática: [descrição]
+• Sistematização (20min): [descrição]
+• Encerramento (15min): [descrição]
+Produto esperado: [apenas o produto]
+Instrumentos de acompanhamento: [apenas os instrumentos]
+Evidências de aprendizagem: [apenas as evidências]
+Critérios observáveis: [apenas os critérios]
+Orientações ao docente: [apenas orientações]
+Possíveis dificuldades: [apenas as dificuldades]
+Perguntas para reflexão: [apenas as perguntas]
+Checklist docente: [apenas o checklist]
+===FIM DA AULA===\nETAPA 9 – CONTEXTUALIZAÇÃO: Confirme adaptação ao eixo '+A.ex+'.\nETAPA 10 – AUDITORIA: ✓/✗ com justificativa para cada item. Tabelas de cobertura.');
     clearInterval(iv2);
     document.getElementById('pb').style.width='100%';
     document.getElementById('ldc').style.display='none';
@@ -584,6 +612,264 @@ async function gerarWord(){
   btn.disabled=false;
   btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word';
 }
+
+async function montarDocx(aulas){
+  var D = window.docx;
+  var children = [];
+
+  // Helper: paragraph
+  function p(text, opts){
+    opts = opts||{};
+    var run = new D.TextRun({
+      text: text||'',
+      bold: opts.bold||false,
+      size: opts.size||22,
+      font: 'Arial',
+      color: opts.color||'000000'
+    });
+    return new D.Paragraph({
+      children: [run],
+      alignment: opts.center ? 'center' : 'left',
+      spacing: { before: opts.before||40, after: opts.after||40 }
+    });
+  }
+
+  // Helper: simple table row with 2 cols
+  function row2(label, value, bgLabel){
+    return new D.TableRow({
+      children: [
+        new D.TableCell({
+          children: [p(label, {bold:true, size:20, color:'1F3864'})],
+          width: {size: 3000, type: 'dxa'},
+          shading: bgLabel ? {fill: bgLabel, type: 'clear'} : undefined,
+          margins: {top:80, bottom:80, left:120, right:120}
+        }),
+        new D.TableCell({
+          children: [p(value||'', {size:20})],
+          width: {size: 11400, type: 'dxa'},
+          margins: {top:80, bottom:80, left:120, right:120}
+        })
+      ]
+    });
+  }
+
+  // CAPA
+  children.push(p('PLANEJAMENTO PEDAGÓGICO SENAC', {bold:true, size:36, color:'1F3864', center:true, before:200, after:80}));
+  children.push(p(A.cn||'', {bold:true, size:28, color:'1F3864', center:true, before:0, after:60}));
+  children.push(p(A.sun||'', {size:24, color:'1F3864', center:true, before:0, after:200}));
+  children.push(p('Total de aulas: '+aulas.length, {size:22, center:true, before:0, after:200}));
+  children.push(p(''));
+
+  // PLANOS DE AULA
+  aulas.forEach(function(aula, idx){
+    // Page break before each lesson (except first)
+    if(idx > 0){
+      children.push(new D.Paragraph({
+        children: [new D.PageBreak()],
+        spacing: {before:0, after:0}
+      }));
+    }
+
+    // Lesson header
+    children.push(p('AULA '+(idx+1)+' de '+aulas.length+' — '+(aula.titulo||''), {
+      bold:true, size:28, color:'1F3864', before:120, after:80
+    }));
+    children.push(p(A.sun||'', {size:20, color:'5C5B58', before:0, after:160}));
+
+    // Info table
+    children.push(new D.Table({
+      width: {size: 14400, type: 'dxa'},
+      columnWidths: [3600, 3600, 3600, 3600],
+      rows: [
+        new D.TableRow({children:[
+          new D.TableCell({children:[p('Carga Horária',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p('Modalidade',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p('Indicadores',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p('Metodologia',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}})
+        ]}),
+        new D.TableRow({children:[
+          new D.TableCell({children:[p(aula.ch||'4h',{size:20})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p(aula.modalidade||'Presencial',{size:20})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p(aula.indicadores||'',{size:20})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p(aula.metodologia||'',{size:19})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}})
+        ]})
+      ]
+    }));
+    children.push(p(''));
+
+    // Content sections
+    var secoes = [
+      ['Situação de Aprendizagem', aula.situacao],
+      ['Objetivo da Aula', aula.objetivo],
+      ['Conhecimentos', aula.conhecimentos],
+      ['Habilidades', aula.habilidades],
+      ['Atitudes', aula.atitudes],
+      ['Produto Esperado', aula.produto],
+      ['Evidências de Aprendizagem', aula.evidencias],
+      ['Critérios Observáveis', aula.criterios],
+      ['Instrumentos de Acompanhamento', aula.instrumentos],
+    ];
+    secoes.forEach(function(s){
+      if(s[1]){
+        children.push(new D.Table({
+          width:{size:14400,type:'dxa'},
+          columnWidths:[3200,11200],
+          rows:[row2(s[0],s[1],'D6DCE4')]
+        }));
+        children.push(p(''));
+      }
+    });
+
+    // Desenvolvimento
+    var dev = aula.desenvolvimento||{};
+    var devItems = [
+      ['Acolhimento (15 min)',dev.acolhimento],
+      ['Mobilização (20 min)',dev.mobilizacao],
+      ['Desenvolvimento',dev.desenvolvimento],
+      ['Prática',dev.pratica],
+      ['Sistematização (20 min)',dev.sistematizacao],
+      ['Encerramento (15 min)',dev.encerramento]
+    ].filter(function(d){return d[1];});
+    
+    if(devItems.length){
+      children.push(p('DESENVOLVIMENTO DA AULA', {bold:true, size:22, color:'1F3864', before:80, after:40}));
+      children.push(new D.Table({
+        width:{size:14400,type:'dxa'},
+        columnWidths:[3200,11200],
+        rows: devItems.map(function(d){return row2(d[0],d[1],'D6DCE4');})
+      }));
+      children.push(p(''));
+    }
+
+    // More sections
+    var secoes2 = [
+      ['Orientações ao Docente', aula.orientacoes],
+      ['Possíveis Dificuldades', aula.dificuldades],
+      ['Perguntas para Reflexão', aula.reflexao],
+      ['Checklist do Docente', aula.checklist],
+    ];
+    secoes2.forEach(function(s){
+      if(s[1]){
+        children.push(new D.Table({
+          width:{size:14400,type:'dxa'},
+          columnWidths:[3200,11200],
+          rows:[row2(s[0],s[1],'D6DCE4')]
+        }));
+        children.push(p(''));
+      }
+    });
+
+    children.push(p('─'.repeat(80), {color:'AAAAAA', size:16, before:40, after:40}));
+  });
+
+  // Build document
+  var doc = new D.Document({
+    sections:[{
+      properties:{
+        page:{
+          size:{width:16838, height:11906},
+          margin:{top:720, right:720, bottom:720, left:720}
+        }
+      },
+      children: children
+    }]
+  });
+
+  var blob = await D.Packer.toBlob(doc);
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var nm = (A.sun||'planejamento').replace(/[^\w\sÀ-ÿ]/g,'').replace(/\s+/g,'_').substring(0,50);
+  a.href = url;
+  a.download = 'Planejamento_'+nm+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.docx';
+  a.click();
+  setTimeout(function(){URL.revokeObjectURL(url);}, 3000);
+}
+
+
+function parsearAulas(txt){
+  var aulas=[];
+  // Split by AULA N de N — header pattern
+  var blocos = txt.split(/(?=AULA\s+\d+\s+de\s+\d+\s*[—–|])/);
+  
+  blocos.forEach(function(bloco){
+    if(!bloco.match(/^AULA\s+\d+/)) return;
+    var a={};
+    
+    // Extract title from first line
+    var tituloM = bloco.match(/^AULA\s+\d+\s+de\s+\d+\s*[—–|]+\s*([^\n]+)/);
+    a.titulo = tituloM ? tituloM[1].trim().replace(/UC\d+.*/,'').trim() : 'Aula';
+    
+    // CH and modalidade from the line after title
+    var chM = bloco.match(/CH:\s*([\dh]+)/i);
+    a.ch = chM ? chM[1].trim() : '4h';
+    var modM = bloco.match(/Modalidade:\s*([^\n|]+)/i);
+    a.modalidade = modM ? modM[1].trim() : 'Presencial';
+    
+    // Helper: extract field content between label and next label
+    // Next label patterns to stop at
+    var stopPat = '(?=\\n(?:Indicadores?|Conhecimentos?|Habilidades?|Atitudes?|Objetivo|Situa|Metodologia|Recursos|DESENVOLVIMENTO|Produto|Instrumentos|Evid|Crit|Orienta|Poss|Estrat|Perguntas?|Checklist|AULA\\s+\\d|═|╚)|$)';
+    
+    function getField(label, fallback){
+      var r = new RegExp(label + ':\\s*([\\s\\S]+?)' + stopPat, 'i');
+      var m = bloco.match(r);
+      if(!m) return fallback||'';
+      // Clean the value - remove subsequent field labels that leaked in
+      var val = m[1].trim();
+      // Stop at any line that looks like "FieldName:" pattern
+      var lines = val.split('\n');
+      var clean = [];
+      for(var i=0;i<lines.length;i++){
+        var l = lines[i];
+        // Stop if line starts with known field name followed by colon
+        if(i>0 && l.match(/^\*\*?(Indicadores?|Conhecimentos?|Habilidades?|Atitudes?|Objetivo|Situa|Metodologia ativa|Recursos necessários|Produto esperado|Instrumentos|Evidências|Critérios|Orientações ao|Possíveis|Estratégias|Perguntas para|Checklist)\*\*?:/i)) break;
+        if(i>0 && l.match(/^(Indicadores?|Conhecimentos?|Habilidades?|Atitudes?|Objetivo|Situa|Metodologia ativa|Recursos necessários|Produto esperado|Instrumentos|Evidências|Critérios|Orientações ao|Possíveis|Estratégias|Perguntas para|Checklist):/i)) break;
+        clean.push(l);
+      }
+      return clean.join('\n').trim().replace(/\*\*/g,'').replace(/^[-•*]\s*/gm,'• ');
+    }
+    
+    a.indicadores  = getField('Indicadores?(?:\s+trabalhados?)?');
+    a.conhecimentos = getField('Conhecimentos?');
+    a.habilidades  = getField('Habilidades?');
+    a.atitudes     = getField('Atitudes?');
+    a.objetivo     = getField('Objetivo(?:\s+da\s+aula)?');
+    a.situacao     = getField('Situa[çc][aã]o(?:\s+de\s+aprendizagem)?');
+    a.metodologia  = getField('Metodologia(?:\s+ativa)?');
+    a.recursos     = getField('Recursos(?:\s+necess[aá]rios)?');
+    a.produto      = getField('Produto(?:\s+esperado)?');
+    a.instrumentos = getField('Instrumentos(?:\s+de\s+acompanhamento)?');
+    a.evidencias   = getField('Evid[eê]ncias(?:\s+de\s+aprendizagem)?');
+    a.criterios    = getField('Crit[eé]rios(?:\s+observ[aá]veis)?');
+    a.orientacoes  = getField('Orienta[çc][oõ]es(?:\s+ao\s+docente)?');
+    a.dificuldades = getField('Poss[ií]veis(?:\s+dificuldades?)?');
+    a.reflexao     = getField('Perguntas?(?:\s+para\s+reflex[aã]o)?');
+    a.checklist    = getField('Checklist(?:\s+docente)?');
+    
+    // Extract DESENVOLVIMENTO block
+    a.desenvolvimento = {};
+    var devM = bloco.match(/DESENVOLVIMENTO[^:]*:([\s\S]+?)(?=Produto esperado:|╚|$)/i);
+    if(devM){
+      var db = devM[1];
+      var devFields = [
+        {k:'acolhimento',  p:/(?:Acolhimento)[^:]*:\s*([^\n]+(?:\n(?![•*]\s*\*\*(?:Mobili|Desen|Prátic|Sistem|Encer))[^\n]*)*)/i},
+        {k:'mobilizacao',  p:/(?:Mobiliza[çc][aã]o)[^:]*:\s*([^\n]+(?:\n(?![•*]\s*\*\*(?:Desen|Prátic|Sistem|Encer))[^\n]*)*)/i},
+        {k:'desenvolvimento',p:/(?:Desenvolvimento)[^:]*:\s*([^\n]+(?:\n(?![•*]\s*\*\*(?:Prátic|Sistem|Encer))[^\n]*)*)/i},
+        {k:'pratica',      p:/(?:Pr[aá]tica)[^:]*:\s*([^\n]+(?:\n(?![•*]\s*\*\*(?:Sistem|Encer))[^\n]*)*)/i},
+        {k:'sistematizacao',p:/(?:Sistematiza[çc][aã]o)[^:]*:\s*([^\n]+(?:\n(?![•*]\s*\*\*Encer)[^\n]*)*)/i},
+        {k:'encerramento', p:/(?:Encerramento)[^:]*:\s*([^\n]+(?:\n(?![•*]\s*\*\*)[^\n]*)*)/i},
+      ];
+      devFields.forEach(function(df){
+        var m=db.match(df.p);
+        if(m) a.desenvolvimento[df.k]=m[1].trim().replace(/\*\*/g,'');
+      });
+    }
+    
+    if(a.titulo && a.titulo.length > 1) aulas.push(a);
+  });
+  
+  return aulas;
+}
+
 
 async function montarDocx(aulas){
   var D = window.docx;
