@@ -1,6 +1,6 @@
-// VERSAO 15 - 2026-06-04
+// VERSAO 16 - 2026-06-04-FIXED
 
-console.log("VERSAO NOVA CARREGADA - 2026-06-04-v15");
+console.log("VERSAO 16 CARREGADA - app.js separado e corrigido");
 // ── STATE ──────────────────────────────────────────
 var A={po:'',cn:'',ex:'',ucs:[],su:null,sun:'',hist:[],key:localStorage.getItem('gk')||''};
 
@@ -221,35 +221,7 @@ async function gen(){
     si=0;
     var iv2=setInterval(function(){if(si<steps2.length){document.getElementById('lt').textContent=steps2[si][0];document.getElementById('pb').style.width=steps2[si][1]+'%';si++;}},5000);
 
-    var p2=await chamada(key,'Você é Especialista Sênior em Planejamento Pedagógico do SENAC SP. Responda em português brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nPLANEJAMENTO (etapas 1-5) JÁ FEITO:\n'+p1+'\n\nEXECUTE ETAPAS 6-10:\nETAPA 6 – SITUAÇÕES: Para cada uma das '+nAulas+' aulas: Título|Contexto real de RH|Problema|Objetivo|Desenvolvimento|Entrega|Evidências|Critérios|Indicadores.\nETAPA 7 – METODOLOGIAS: Para cada aula, estratégia do Banco SENAC SP com justificativa. Diversifique.\nETAPA 8 – TODOS OS '+nAulas+' PLANOS DE AULA. CRÍTICO: Use EXATAMENTE este formato para cada aula, sem adicionar texto extra depois de cada rótulo antes da próxima linha:
-
-AULA [N] de '+nAulas+' — [TÍTULO DA AULA]
-CH: [X]h | Modalidade: [Presencial/EaD]
----
-Indicadores trabalhados: [apenas os números, ex: 1, 2]
-Conhecimentos: [liste apenas os conhecimentos desta aula, sem outros campos]
-Habilidades: [liste apenas as habilidades, sem outros campos]
-Atitudes: [liste apenas as atitudes, sem outros campos]
-Objetivo da aula: [apenas o objetivo em 1-2 linhas]
-Situação de aprendizagem: [apenas a situação, em 2-3 linhas]
-Metodologia ativa: [apenas o nome da estratégia]
-Recursos necessários: [lista de recursos]
-DESENVOLVIMENTO DA AULA:
-• Acolhimento (15min): [descrição]
-• Mobilização (20min): [descrição]
-• Desenvolvimento: [descrição]
-• Prática: [descrição]
-• Sistematização (20min): [descrição]
-• Encerramento (15min): [descrição]
-Produto esperado: [apenas o produto]
-Instrumentos de acompanhamento: [apenas os instrumentos]
-Evidências de aprendizagem: [apenas as evidências]
-Critérios observáveis: [apenas os critérios]
-Orientações ao docente: [apenas orientações]
-Possíveis dificuldades: [apenas as dificuldades]
-Perguntas para reflexão: [apenas as perguntas]
-Checklist docente: [apenas o checklist]
-===FIM DA AULA===\nETAPA 9 – CONTEXTUALIZAÇÃO: Confirme adaptação ao eixo '+A.ex+'.\nETAPA 10 – AUDITORIA: ✓/✗ com justificativa para cada item. Tabelas de cobertura.');
+    var p2=await chamada(key,'Voce e Especialista Senior em Planejamento Pedagogico do SENAC SP. Responda em portugues brasileiro.\n\nDADOS: '+base+'\n\nBANCO SENAC SP: '+banco+'\n\nP.O.:\n'+po+'\n\nPLANEJAMENTO (etapas 1-5) JA FEITO:\n'+p1+'\n\nEXECUTE ETAPAS 6-10:\nETAPA 6: Para cada uma das '+nAulas+' aulas, crie situacao contextualizada com: Titulo, Contexto profissional real, Problema, Objetivo, Desenvolvimento, Entrega, Evidencias, Criterios, Indicadores.\nETAPA 7: Para cada aula, indique estrategia do Banco SENAC SP e justifique. Diversifique.\nETAPA 8: Gere TODOS os '+nAulas+' planos de aula. Para cada aula use EXATAMENTE este formato:\n\nAULA [N] de '+nAulas+' | [TITULO]\nCH: [X]h | Modalidade: [Presencial/EaD]\nIndicadores: [numeros]\nConhecimentos: [lista]\nHabilidades: [lista]\nAtitudes: [lista]\nObjetivo: [objetivo]\nSituacao: [situacao]\nMetodologia: [nome]\nRecursos: [lista]\nACOLHIMENTO: [descricao]\nMOBILIZACAO: [descricao]\nDESENVOLVIMENTO: [descricao]\nPRATICA: [descricao]\nSISTEMATIZACAO: [descricao]\nENCERRAMENTO: [descricao]\nPRODUTO: [produto]\nEVIDENCIAS: [evidencias]\nCRITERIOS: [criterios]\nINSTRUMENTOS: [instrumentos]\nORIENTACOES: [orientacoes]\nREFLEXAO: [perguntas]\nCHECKLIST: [checklist]\n---FIM---\n\nETAPA 9: Adapte exemplos ao eixo '+A.ex+'.\nETAPA 10: Auditoria com tabelas de cobertura.');
     clearInterval(iv2);
     document.getElementById('pb').style.width='100%';
     document.getElementById('ldc').style.display='none';
