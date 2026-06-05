@@ -1,6 +1,6 @@
-// VERSAO 18 - REVISAO GERAL
+// VERSAO 19 - WORD BATCH
 
-console.log("VERSAO 18 CARREGADA - revisao geral completa");
+console.log("VERSAO 19 - Word em lotes de 7 aulas");
 // ── STATE ──────────────────────────────────────────
 var A={po:'',cn:'',ex:'',ucs:[],su:null,sun:'',hist:[],key:localStorage.getItem('gk')||''};
 
@@ -299,52 +299,66 @@ async function gerarWord(){
   btn.innerHTML = '<i class="ti ti-loader"></i> Convertendo para Word...';
 
   var key = A.key || localStorage.getItem('gk') || '';
-  if(!key){ alert('Chave Gemini não configurada.'); btn.disabled=false; btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word'; return; }
+  if(!key){ alert('Chave Gemini nao configurada.'); btn.disabled=false; btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word'; return; }
 
   var txt = document.getElementById('ob').textContent || '';
   if(!txt){ alert('Gere o planejamento primeiro.'); btn.disabled=false; btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word'; return; }
 
   try {
-    // Step 1: Ask Gemini to convert the text to clean JSON
-    btn.innerHTML = '<i class="ti ti-loader"></i> Extraindo dados (1/2)...';
+    // Count how many lessons exist in the text
+    var aulaCount = (txt.match(/AULA\s+\d+\s+de\s+\d+/gi) || []).length;
+    if(aulaCount === 0) aulaCount = (txt.match(/AULA\s+\d+\s*[—–|]/gi) || []).length;
+    if(aulaCount === 0){ alert('Nenhum plano de aula encontrado no texto.'); btn.disabled=false; btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word'; return; }
 
-    var jsonPrompt = 'Voce recebera um planejamento pedagogico em texto. Extraia APENAS os planos de aula individuais e retorne um JSON puro (sem markdown, sem ```json, apenas o objeto JSON).\n\nO JSON deve ter este formato exato:\n{\n  \"aulas\": [\n    {\n      \"numero\": 1,\n      \"titulo\": \"titulo da aula\",\n      \"ch\": \"4h\",\n      \"modalidade\": \"Presencial\",\n      \"indicadores\": \"1, 2\",\n      \"metodologia\": \"nome da metodologia\",\n      \"conhecimentos\": \"lista de conhecimentos desta aula\",\n      \"habilidades\": \"lista de habilidades\",\n      \"atitudes\": \"lista de atitudes\",\n      \"objetivo\": \"objetivo da aula em 1-2 frases\",\n      \"situacao\": \"situacao de aprendizagem em 2-3 frases\",\n      \"recursos\": \"lista de recursos\",\n      \"acolhimento\": \"o que acontece no acolhimento\",\n      \"mobilizacao\": \"o que acontece na mobilizacao\",\n      \"desenvolvimento\": \"o que acontece no desenvolvimento\",\n      \"pratica\": \"o que acontece na pratica\",\n      \"sistematizacao\": \"o que acontece na sistematizacao\",\n      \"encerramento\": \"o que acontece no encerramento\",\n      \"produto\": \"produto esperado\",\n      \"evidencias\": \"evidencias de aprendizagem\",\n      \"criterios\": \"criterios observaveis\",\n      \"instrumentos\": \"instrumentos de acompanhamento\",\n      \"orientacoes\": \"orientacoes ao docente\",\n      \"reflexao\": \"perguntas para reflexao\",\n      \"checklist\": \"checklist do docente\"\n    }\n  ]\n}\n\nREGRAS:\n- Retorne SOMENTE o JSON, sem texto antes ou depois\n- Cada campo deve conter APENAS o conteudo daquele campo\n- Nao misture conteudo de campos diferentes\n- Se um campo nao existir, use string vazia \"\"\n\nTEXTO DO PLANEJAMENTO:\n' + txt.substring(0, 50000)
+    // Split into batches of 7
+    var batchSize = 7;
+    var batches = Math.ceil(aulaCount / batchSize);
+    var allAulas = [];
 
-    var jsonResp = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key,
-      {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          contents: [{parts: [{text: jsonPrompt}]}],
-          generationConfig: {maxOutputTokens: 65536, temperature: 0.1}
-        })
+    for(var b = 0; b < batches; b++){
+      var from = b * batchSize + 1;
+      var to = Math.min((b+1) * batchSize, aulaCount);
+      btn.innerHTML = '<i class="ti ti-loader"></i> Extraindo aulas ' + from + '-' + to + ' de ' + aulaCount + '...';
+
+      var prompt = 'Extraia APENAS as aulas ' + from + ' a ' + to + ' do planejamento abaixo e retorne um JSON puro.\n\n';
+      prompt += 'Formato EXATO do JSON (sem markdown, sem ```json, apenas o JSON):\n';
+      prompt += '{"aulas":[{"numero":1,"titulo":"...","ch":"4h","modalidade":"Presencial","indicadores":"1, 2",';
+      prompt += '"metodologia":"...","conhecimentos":"...","habilidades":"...","atitudes":"...","objetivo":"...",';
+      prompt += '"situacao":"...","recursos":"...","acolhimento":"...","mobilizacao":"...","desenvolvimento":"...",';
+      prompt += '"pratica":"...","sistematizacao":"...","encerramento":"...","produto":"...","evidencias":"...",';
+      prompt += '"criterios":"...","instrumentos":"...","orientacoes":"...","reflexao":"...","checklist":"..."}]}\n\n';
+      prompt += 'REGRAS:\n- Retorne SOMENTE o JSON\n- Cada campo deve conter APENAS o conteudo daquele campo\n';
+      prompt += '- NAO misture campos\n- Extraia SOMENTE as aulas ' + from + ' a ' + to + '\n\n';
+      prompt += 'TEXTO:\n' + txt.substring(0, 55000);
+
+      var resp = await fetch(
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key,
+        { method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ contents: [{parts: [{text: prompt}]}],
+            generationConfig: {maxOutputTokens: 65536, temperature: 0.1} }) }
+      );
+      var data = await resp.json();
+      if(data.error) throw new Error('Gemini: ' + data.error.message);
+
+      var raw = data.candidates[0].content.parts.map(function(p){return p.text||'';}).join('');
+      raw = raw.replace(/```json\s*/gi,'').replace(/```\s*/gi,'').trim();
+
+      var parsed;
+      try { parsed = JSON.parse(raw); }
+      catch(e) {
+        var m = raw.match(/\{[\s\S]*\}/);
+        if(m) parsed = JSON.parse(m[0]);
+        else throw new Error('JSON invalido no lote ' + (b+1));
       }
-    );
 
-    var jsonData = await jsonResp.json();
-    if(jsonData.error) throw new Error('Erro Gemini: ' + jsonData.error.message);
-
-    var rawJson = jsonData.candidates[0].content.parts.map(function(p){return p.text||'';}).join('');
-    // Clean any markdown fences
-    rawJson = rawJson.replace(/```json\s*/gi,'').replace(/```\s*/gi,'').trim();
-
-    var parsed;
-    try {
-      parsed = JSON.parse(rawJson);
-    } catch(e) {
-      // Try to extract JSON object
-      var m = rawJson.match(/\{[\s\S]*\}/);
-      if(m) parsed = JSON.parse(m[0]);
-      else throw new Error('JSON inválido: ' + rawJson.substring(0,200));
+      if(parsed.aulas) allAulas = allAulas.concat(parsed.aulas);
     }
 
-    var aulas = parsed.aulas || [];
-    if(!aulas.length) throw new Error('Nenhuma aula encontrada no JSON.');
+    if(!allAulas.length) throw new Error('Nenhuma aula extraida.');
 
-    // Step 2: Build Word document
-    btn.innerHTML = '<i class="ti ti-loader"></i> Gerando Word (2/2)...';
+    btn.innerHTML = '<i class="ti ti-loader"></i> Montando Word (' + allAulas.length + ' aulas)...';
 
+    // Load docx library
     if(!window.docx){
       await new Promise(function(res,rej){
         var s = document.createElement('script');
@@ -354,7 +368,7 @@ async function gerarWord(){
       });
     }
 
-    await montarDocxDeJSON(aulas);
+    await montarDocxDeJSON(allAulas);
 
   } catch(e) {
     console.error(e);
@@ -364,6 +378,7 @@ async function gerarWord(){
   btn.disabled = false;
   btn.innerHTML = '<i class="ti ti-file-word"></i> Baixar Word';
 }
+
 
 async function montarDocxDeJSON(aulas){
   var D = window.docx;
