@@ -1,6 +1,6 @@
-// VERSAO 22 - BANCO RICO
+// VERSAO 23 - TOKEN SAVE
 
-console.log("VERSAO 22 - Banco de estrategias com descricoes completas");
+console.log("VERSAO 23 - Extrai secao da UC para economizar tokens");
 // ── STATE ──────────────────────────────────────────
 var A={po:'',cn:'',ex:'',ucs:[],su:null,sun:'',hist:[],key:localStorage.getItem('gk')||''};
 
@@ -92,6 +92,59 @@ function dUC(t){
   }
   return f;
 }
+// Extract only the section of the PO relevant to the selected UC
+// Reduces tokens from ~50k to ~5k per generation call
+function extrairSecaoUC(po, ucn){
+  if(!po || !ucn) return po;
+  
+  // Get the UC number from ucn (e.g. "UC4" from "UC4 – Desenhar cargos...")
+  var numM = ucn.match(/UC\s*(\d+)/i);
+  if(!numM) return po;
+  var num = numM[1];
+  var numInt = parseInt(num);
+  
+  // Try to find the start of this UC section
+  var patterns = [
+    new RegExp('UC\\s*' + num + '\\s*[\\-–—:]', 'i'),
+    new RegExp('UNIDADE CURRICULAR\\s*' + num + '\\b', 'i'),
+    new RegExp('\\b' + num + '\\.\\s*(?:UC|Unidade)', 'i'),
+  ];
+  
+  var startIdx = -1;
+  for(var i = 0; i < patterns.length; i++){
+    var m = po.search(patterns[i]);
+    if(m > -1){ startIdx = m; break; }
+  }
+  
+  if(startIdx === -1){
+    // Fallback: search for the UC name directly
+    var nameM = ucn.replace(/UC\s*\d+\s*[–—-]\s*/i, '').trim().substring(0, 30);
+    startIdx = po.indexOf(nameM);
+  }
+  
+  if(startIdx === -1) return po; // Not found - use full PO
+  
+  // Find start of NEXT UC to know where this one ends
+  var nextPatterns = [
+    new RegExp('UC\\s*' + (numInt+1) + '\\s*[\\-–—:]', 'i'),
+    new RegExp('UNIDADE CURRICULAR\\s*' + (numInt+1) + '\\b', 'i'),
+  ];
+  
+  var endIdx = po.length;
+  for(var j = 0; j < nextPatterns.length; j++){
+    var nm = po.search(nextPatterns[j]);
+    if(nm > startIdx){ endIdx = nm; break; }
+  }
+  
+  // Extract the section (with some context before it)
+  var contextStart = Math.max(0, startIdx - 500); // 500 chars before for context
+  var section = po.substring(contextStart, endIdx);
+  
+  console.log('PO original: ' + po.length + ' chars -> Secao UC' + num + ': ' + section.length + ' chars');
+  return section;
+}
+
+
 function rUCG(){
   var g=document.getElementById('ucg');
   if(!A.ucs.length){g.innerHTML='<div class="es"><i class="ti ti-search-off"></i>Nenhuma UC detectada. Use o campo manual.</div>';return;}
@@ -213,7 +266,10 @@ async function chamada(key, prompt, tentativa){
 async function gen(){
   var key=A.key||localStorage.getItem('gk')||'';
   if(!key){alert('Configure a chave Gemini em "API Key Gemini".');gp(5);return;}
-  var po=A.po||(document.getElementById('po').value||'').trim();
+  var poFull=A.po||(document.getElementById('po').value||'').trim();
+  // Extract only the relevant UC section to save tokens (10x reduction)
+  var ucnTemp=A.sun||document.getElementById('ucm').value.trim();
+  var po = extrairSecaoUC(poFull, ucnTemp);
   var ucn=A.sun||document.getElementById('ucm').value.trim();
   var p=document.getElementById('chp').value,e=document.getElementById('che').value||'0';
   var dur=document.getElementById('da'),durT=dur.options[dur.selectedIndex].text;
@@ -383,7 +439,11 @@ async function gerarWord(){
       prompt += '"criterios":"...","instrumentos":"...","orientacoes":"...","reflexao":"...","checklist":"..."}]}\n\n';
       prompt += 'REGRAS:\n- Retorne SOMENTE o JSON\n- Cada campo deve conter APENAS o conteudo daquele campo\n';
       prompt += '- NAO misture campos\n- Extraia SOMENTE as aulas ' + from + ' a ' + to + '\n\n';
-      prompt += 'TEXTO:\n' + txt.substring(0, 55000);
+      // Send only the PARTE 2 section (planos de aula) to save tokens
+      var txtPart2 = txt;
+      var p2start = txt.indexOf('PARTE 2');
+      if(p2start > -1) txtPart2 = txt.substring(p2start);
+      prompt += 'TEXTO:\n' + txtPart2.substring(0, 45000);
 
       // Use chamada() with auto-retry for quota errors
       var raw = await chamada(key, prompt);
