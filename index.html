@@ -582,36 +582,321 @@ function tk(){var i=document.getElementById('ak'),ic=document.getElementById('ei
 
 // ── WORD EXPORT ────────────────────────────────────
 async function gerarWord(){
-  var btn=document.getElementById('bw');
-  btn.disabled=true;
-  btn.innerHTML='<i class="ti ti-loader"></i> Gerando Word...';
+  var btn = document.getElementById('bw');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader"></i> Convertendo para Word...';
+
+  var key = A.key || localStorage.getItem('gk') || '';
+  if(!key){ alert('Chave Gemini não configurada.'); btn.disabled=false; btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word'; return; }
+
+  var txt = document.getElementById('ob').textContent || '';
+  if(!txt){ alert('Gere o planejamento primeiro.'); btn.disabled=false; btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word'; return; }
+
   try {
-    // Load docx library
+    // Step 1: Ask Gemini to convert the text to clean JSON
+    btn.innerHTML = '<i class="ti ti-loader"></i> Extraindo dados (1/2)...';
+
+    var jsonPrompt = `Você receberá um planejamento pedagógico em texto. Extraia APENAS os planos de aula individuais e retorne um JSON puro (sem markdown, sem \`\`\`json, apenas o objeto JSON).
+
+O JSON deve ter este formato exato:
+{
+  "aulas": [
+    {
+      "numero": 1,
+      "titulo": "título da aula",
+      "ch": "4h",
+      "modalidade": "Presencial",
+      "indicadores": "1, 2",
+      "metodologia": "nome da metodologia",
+      "conhecimentos": "lista de conhecimentos desta aula",
+      "habilidades": "lista de habilidades",
+      "atitudes": "lista de atitudes",
+      "objetivo": "objetivo da aula em 1-2 frases",
+      "situacao": "situação de aprendizagem em 2-3 frases",
+      "recursos": "lista de recursos",
+      "acolhimento": "o que acontece no acolhimento",
+      "mobilizacao": "o que acontece na mobilização",
+      "desenvolvimento": "o que acontece no desenvolvimento",
+      "pratica": "o que acontece na prática",
+      "sistematizacao": "o que acontece na sistematização",
+      "encerramento": "o que acontece no encerramento",
+      "produto": "produto esperado",
+      "evidencias": "evidências de aprendizagem",
+      "criterios": "critérios observáveis",
+      "instrumentos": "instrumentos de acompanhamento",
+      "orientacoes": "orientações ao docente",
+      "reflexao": "perguntas para reflexão",
+      "checklist": "checklist do docente"
+    }
+  ]
+}
+
+REGRAS CRÍTICAS:
+- Retorne SOMENTE o JSON, sem nenhum texto antes ou depois
+- Cada campo deve conter APENAS o conteúdo daquele campo específico
+- Não misture conteúdo de campos diferentes
+- Se um campo não existir, use string vazia ""
+
+TEXTO DO PLANEJAMENTO:
+${txt.substring(0, 60000)}`;
+
+    var jsonResp = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key,
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          contents: [{parts: [{text: jsonPrompt}]}],
+          generationConfig: {maxOutputTokens: 65536, temperature: 0.1}
+        })
+      }
+    );
+
+    var jsonData = await jsonResp.json();
+    if(jsonData.error) throw new Error('Erro Gemini: ' + jsonData.error.message);
+
+    var rawJson = jsonData.candidates[0].content.parts.map(function(p){return p.text||'';}).join('');
+    // Clean any markdown fences
+    rawJson = rawJson.replace(/```json\s*/gi,'').replace(/```\s*/gi,'').trim();
+
+    var parsed;
+    try {
+      parsed = JSON.parse(rawJson);
+    } catch(e) {
+      // Try to extract JSON object
+      var m = rawJson.match(/\{[\s\S]*\}/);
+      if(m) parsed = JSON.parse(m[0]);
+      else throw new Error('JSON inválido: ' + rawJson.substring(0,200));
+    }
+
+    var aulas = parsed.aulas || [];
+    if(!aulas.length) throw new Error('Nenhuma aula encontrada no JSON.');
+
+    // Step 2: Build Word document
+    btn.innerHTML = '<i class="ti ti-loader"></i> Gerando Word (2/2)...';
+
     if(!window.docx){
       await new Promise(function(res,rej){
-        var s=document.createElement('script');
-        s.src='https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.js';
-        s.onload=res; s.onerror=rej;
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.js';
+        s.onload = res; s.onerror = rej;
         document.head.appendChild(s);
       });
     }
-    if(!window.docx||!window.docx.Document){
-      throw new Error('Biblioteca não carregou. Verifique sua conexão.');
-    }
-    var txt=document.getElementById('ob').textContent||'';
-    var aulas=parsearAulas(txt);
-    if(aulas.length===0){
-      alert('Nenhum plano de aula encontrado.\n\nO formato ╔═══ AULA N ═══ não foi detectado no texto gerado. Isso acontece quando o Gemini não usou o formato padrão.\n\nUse o botão "Baixar .txt" para salvar o conteúdo.');
-      return;
-    }
-    await montarDocx(aulas);
+
+    await montarDocxDeJSON(aulas);
+
   } catch(e) {
-    console.error('Word error:', e);
-    alert('Erro ao gerar Word: ' + (e.message||String(e)));
+    console.error(e);
+    alert('Erro: ' + e.message);
   }
-  btn.disabled=false;
-  btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word';
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-file-word"></i> Baixar Word';
 }
+
+async function montarDocxDeJSON(aulas){
+  var D = window.docx;
+  var AZ='1F3864', OR='E05A1A', CZ='D6DCE4', CZ2='F2F2F2', BR='FFFFFF';
+
+  var brd = {style:'single', size:4, color:'CCCCCC'};
+  var brdAll = {top:brd, bottom:brd, left:brd, right:brd};
+  var brdAz = {top:{style:'single',size:8,color:AZ}, bottom:{style:'single',size:8,color:AZ}, left:{style:'single',size:8,color:AZ}, right:{style:'single',size:8,color:AZ}};
+  var mg = {top:80, bottom:80, left:120, right:120};
+
+  function p(text, opts){
+    opts = opts||{};
+    return new D.Paragraph({
+      children:[new D.TextRun({text:String(text||''), bold:opts.b||false, size:opts.s||22, font:'Arial', color:opts.c||'000000'})],
+      alignment: opts.center ? 'center' : 'left',
+      spacing:{before:opts.sb||40, after:opts.sa||40}
+    });
+  }
+
+  function cell(children, bg, w, span){
+    return new D.TableCell({
+      children: Array.isArray(children) ? children : [children],
+      borders: brdAll,
+      width: w ? {size:w, type:'dxa'} : undefined,
+      columnSpan: span||1,
+      shading: bg ? {fill:bg, type:'clear'} : undefined,
+      margins: mg
+    });
+  }
+
+  function row2(label, value, bgLabel){
+    var labelPar = p(label, {b:true, s:20, c:AZ});
+    var valuePar = p(value||'', {s:20});
+    return new D.TableRow({children:[
+      cell(labelPar, bgLabel||CZ, 3200),
+      cell(valuePar, null, 11200)
+    ]});
+  }
+
+  function tbl2(rows){
+    return new D.Table({width:{size:14400,type:'dxa'}, columnWidths:[3200,11200], rows:rows});
+  }
+
+  var children = [];
+
+  // CAPA
+  children.push(new D.Table({
+    width:{size:14400,type:'dxa'}, columnWidths:[14400],
+    rows:[new D.TableRow({children:[
+      cell([
+        p('PLANEJAMENTO PEDAGÓGICO SENAC',{b:true,s:32,c:BR,center:true,sb:160,sa:60}),
+        p(A.cn||'', {b:true,s:26,c:BR,center:true,sb:0,sa:60}),
+        p(A.sun||'', {s:22,c:BR,center:true,sb:0,sa:160})
+      ], AZ, 14400)
+    ]})]
+  }));
+  children.push(p(''));
+  children.push(new D.Table({
+    width:{size:14400,type:'dxa'}, columnWidths:[4000,10400],
+    rows:[
+      new D.TableRow({children:[cell(p('Total de Aulas:',{b:true,s:20,c:AZ}),CZ,4000), cell(p(String(aulas.length)+' aulas',{s:20}),null,10400)]}),
+      new D.TableRow({children:[cell(p('Docente:',{b:true,s:20,c:AZ}),CZ,4000), cell(p('',{s:20}),null,10400)]}),
+      new D.TableRow({children:[cell(p('Turma:',{b:true,s:20,c:AZ}),CZ,4000), cell(p('',{s:20}),null,10400)]})
+    ]
+  }));
+
+  // AULAS
+  aulas.forEach(function(a, idx){
+    children.push(new D.Paragraph({children:[new D.PageBreak()]}));
+
+    // Cabeçalho azul
+    children.push(new D.Table({
+      width:{size:14400,type:'dxa'}, columnWidths:[14400],
+      rows:[new D.TableRow({children:[
+        cell([
+          p('AULA '+(a.numero||idx+1)+' de '+aulas.length+' — '+(a.titulo||''),{b:true,s:26,c:BR,center:true,sb:120,sa:60}),
+          p(A.sun||'',{s:20,c:BR,center:true,sb:0,sa:100})
+        ], AZ, 14400, 1)
+      ]})]
+    }));
+    children.push(p(''));
+
+    // Linha de informações rápidas
+    children.push(new D.Table({
+      width:{size:14400,type:'dxa'}, columnWidths:[3600,3600,3600,3600],
+      rows:[
+        new D.TableRow({children:[
+          cell(p('Carga Horária',{b:true,s:20,c:BR}),OR,3600),
+          cell(p('Modalidade',{b:true,s:20,c:BR}),OR,3600),
+          cell(p('Indicadores',{b:true,s:20,c:BR}),OR,3600),
+          cell(p('Metodologia',{b:true,s:20,c:BR}),OR,3600)
+        ]}),
+        new D.TableRow({children:[
+          cell(p(a.ch||'4h',{s:20}),CZ2,3600),
+          cell(p(a.modalidade||'Presencial',{s:20}),CZ2,3600),
+          cell(p(a.indicadores||'',{s:20}),CZ2,3600),
+          cell(p(a.metodologia||'',{s:19}),CZ2,3600)
+        ]})
+      ]
+    }));
+    children.push(p(''));
+
+    // Situação
+    if(a.situacao) { children.push(tbl2([row2('Situação de Aprendizagem', a.situacao)])); children.push(p('')); }
+
+    // Objetivo
+    if(a.objetivo) { children.push(tbl2([row2('Objetivo da Aula', a.objetivo)])); children.push(p('')); }
+
+    // CHA
+    children.push(new D.Table({
+      width:{size:14400,type:'dxa'}, columnWidths:[4800,4800,4800],
+      rows:[
+        new D.TableRow({children:[
+          cell(p('Conhecimentos',{b:true,s:20,c:BR}),AZ,4800),
+          cell(p('Habilidades',{b:true,s:20,c:BR}),AZ,4800),
+          cell(p('Atitudes',{b:true,s:20,c:BR}),AZ,4800)
+        ]}),
+        new D.TableRow({children:[
+          cell(p(a.conhecimentos||'',{s:19}),CZ2,4800),
+          cell(p(a.habilidades||'',{s:19}),CZ2,4800),
+          cell(p(a.atitudes||'',{s:19}),CZ2,4800)
+        ]})
+      ]
+    }));
+    children.push(p(''));
+
+    // Desenvolvimento
+    var devRows = [
+      new D.TableRow({children:[cell(p('DESENVOLVIMENTO',{b:true,s:22,c:BR,center:true}),AZ,14400,1)]})
+    ];
+    [
+      ['Acolhimento (15 min)', a.acolhimento],
+      ['Mobilização (20 min)', a.mobilizacao],
+      ['Desenvolvimento', a.desenvolvimento],
+      ['Prática', a.pratica],
+      ['Sistematização (20 min)', a.sistematizacao],
+      ['Encerramento (15 min)', a.encerramento]
+    ].forEach(function(r){
+      if(r[1]) devRows.push(row2(r[0], r[1]));
+    });
+    children.push(new D.Table({width:{size:14400,type:'dxa'}, columnWidths:[3200,11200], rows:devRows}));
+    children.push(p(''));
+
+    // Avaliação
+    children.push(new D.Table({
+      width:{size:14400,type:'dxa'}, columnWidths:[4800,4800,4800],
+      rows:[
+        new D.TableRow({children:[
+          cell(p('Evidências',{b:true,s:20,c:BR}),OR,4800),
+          cell(p('Critérios Observáveis',{b:true,s:20,c:BR}),OR,4800),
+          cell(p('Instrumentos',{b:true,s:20,c:BR}),OR,4800)
+        ]}),
+        new D.TableRow({children:[
+          cell(p(a.evidencias||'',{s:19}),CZ2,4800),
+          cell(p(a.criterios||'',{s:19}),CZ2,4800),
+          cell(p(a.instrumentos||'',{s:19}),CZ2,4800)
+        ]})
+      ]
+    }));
+    children.push(p(''));
+
+    // Produto + Recursos
+    if(a.produto||a.recursos){
+      children.push(tbl2([
+        row2('Produto Esperado', a.produto),
+        row2('Recursos Necessários', a.recursos)
+      ]));
+      children.push(p(''));
+    }
+
+    // Orientações + Reflexão
+    if(a.orientacoes||a.reflexao){
+      children.push(new D.Table({
+        width:{size:14400,type:'dxa'}, columnWidths:[7200,7200],
+        rows:[new D.TableRow({children:[
+          cell([p('Orientações ao Docente',{b:true,s:20,c:AZ}), p(a.orientacoes||'',{s:19})], CZ2, 7200),
+          cell([p('Perguntas para Reflexão',{b:true,s:20,c:AZ}), p(a.reflexao||'',{s:19})], CZ2, 7200)
+        ]})]
+      }));
+      children.push(p(''));
+    }
+
+    // Checklist
+    if(a.checklist) { children.push(tbl2([row2('Checklist do Docente', a.checklist)])); children.push(p('')); }
+  });
+
+  var doc = new D.Document({
+    sections:[{
+      properties:{page:{size:{width:16838,height:11906}, margin:{top:720,right:720,bottom:720,left:720}}},
+      children: children
+    }]
+  });
+
+  var blob = await D.Packer.toBlob(doc);
+  var url = URL.createObjectURL(blob);
+  var a2 = document.createElement('a');
+  var nm = (A.sun||'planejamento').replace(/[^\w\sÀ-ÿ]/g,'').replace(/\s+/g,'_').substring(0,50);
+  a2.href = url;
+  a2.download = 'Planos_'+nm+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.docx';
+  a2.click();
+  setTimeout(function(){URL.revokeObjectURL(url);}, 3000);
+}
+
 
 async function montarDocx(aulas){
   var D = window.docx;
