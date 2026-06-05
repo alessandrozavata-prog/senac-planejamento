@@ -1,6 +1,6 @@
-// VERSAO 20 - RETRY QUOTA
+// VERSAO 22 - BANCO RICO
 
-console.log("VERSAO 20 - Retry automatico em quota exceeded");
+console.log("VERSAO 22 - Banco de estrategias com descricoes completas");
 // ── STATE ──────────────────────────────────────────
 var A={po:'',cn:'',ex:'',ucs:[],su:null,sun:'',hist:[],key:localStorage.getItem('gk')||''};
 
@@ -189,12 +189,18 @@ async function chamada(key, prompt, tentativa){
   var d = await r.json();
   if(d.error){
     var msg = d.error.message || JSON.stringify(d.error);
-    if((msg.indexOf('quota')>-1 || msg.indexOf('429')>-1 || msg.indexOf('RESOURCE_EXHAUSTED')>-1) && tentativa<=3){
-      var waitSec = 35;
+    // Retry on quota OR high demand / server overload
+    var isRetryable = msg.indexOf('quota')>-1 || msg.indexOf('429')>-1 ||
+      msg.indexOf('RESOURCE_EXHAUSTED')>-1 || msg.indexOf('high demand')>-1 ||
+      msg.indexOf('overloaded')>-1 || msg.indexOf('503')>-1 || msg.indexOf('502')>-1 ||
+      msg.indexOf('try again')>-1;
+    if(isRetryable && tentativa<=4){
+      var waitSec = 30;
       var m = msg.match(/retry in ([\d.]+)s/);
       if(m) waitSec = Math.ceil(parseFloat(m[1])) + 3;
+      if(msg.indexOf('high demand')>-1 || msg.indexOf('overloaded')>-1) waitSec = 20;
       var ltEl = document.getElementById('lt');
-      if(ltEl) ltEl.textContent = 'Limite da API. Aguardando ' + waitSec + 's... (' + tentativa + '/3)';
+      if(ltEl) ltEl.textContent = 'Servidor ocupado. Tentando novamente em ' + waitSec + 's... (' + tentativa + '/4)';
       await sleep(waitSec * 1000);
       return chamada(key, prompt, tentativa + 1);
     }
@@ -224,7 +230,34 @@ async function gen(){
   document.getElementById('ldc').style.display='block';
 
   var base='Curso: '+(A.cn||'N/I')+' | Eixo: '+A.ex+' | UC: '+ucn+' | CH: '+tot+'h | Aulas: '+durT+' | '+nAulas+' aulas | '+mod.options[mod.selectedIndex].text+' | '+nv.options[nv.selectedIndex].text+' | '+enf.options[enf.selectedIndex].text+(obs?' | '+obs:'');
-  var banco='Apresentação e discussão de vídeo, Atividade em grupos com plenária, Brainstorming, Mapa conceitual, Debate, Diário de bordo, Dinâmica de grupo, Discussão de caso, Dramatização, Elaboração de portfólio, Entrevista, Experimentação, Exposição dialogada, Jogo, Pesquisa, Simulação, Storytelling, Trabalho com projetos, Visita técnica, World Café';
+  var banco = [
+  'Apresentação e discussão de vídeo: exibe vídeo curto e discute em grupo; ativa reflexão e contextualização',
+  'Atividade em grupos com plenária: pequenos grupos resolvem problema e apresentam ao grande grupo; desenvolve colaboração',
+  'Brainstorming: geração livre de ideias sem julgamento; ativa conhecimentos prévios e criatividade',
+  'Mapa conceitual: representação visual das relações entre conceitos; organiza e consolida aprendizagem',
+  'Debate: dois grupos defendem posições opostas com argumentos; desenvolve pensamento crítico e comunicação',
+  'Diário de bordo: registro reflexivo das aprendizagens ao longo das aulas; desenvolve metacognição',
+  'Dinâmica de grupo: atividade vivencial em equipe; integra turma e desenvolve habilidades socioemocionais',
+  'Discussão de caso: análise de situação real ou fictícia do mundo do trabalho; aplica teoria na prática',
+  'Dramatização: encenação de situações profissionais; desenvolve empatia e habilidades de comunicação',
+  'Elaboração de portfólio: coleta organizada de produções ao longo da UC; evidencia evolução da aprendizagem',
+  'Entrevista: um aluno entrevista outro ou um convidado; desenvolve escuta ativa e comunicação profissional',
+  'Experimentação: teste prático de hipóteses ou procedimentos; aprendizagem por tentativa e descoberta',
+  'Exposição dialogada: apresentação com perguntas ao longo; transmite conteúdo com participação ativa',
+  'Jogo: atividade lúdica com regras e competição saudável; engaja e fixa conteúdos de forma prazerosa',
+  'Pesquisa: busca e análise de informações em fontes diversas; desenvolve autonomia e pensamento crítico',
+  'Simulação: recriação de situação profissional real em sala; pratica habilidades sem risco real',
+  'Storytelling: narrativa de história real ou fictícia ligada ao tema; conecta emocionalmente ao conteúdo',
+  'Trabalho com projetos: desenvolvimento de produto ou solução para problema real; integra múltiplas competências',
+  'Visita técnica: observação in loco de ambiente profissional; contextualiza e motiva a aprendizagem',
+  'World Café: rodízio de grupos em mesas temáticas com registro; gera múltiplas perspectivas sobre o tema',
+  'Webgincana: gincana online com desafios e busca de informações; engaja em pesquisa de forma competitiva',
+  'Webquest: pesquisa guiada na internet com roteiro estruturado; desenvolve seleção e análise de informação',
+  'Contrato de aprendizagem: acordo docente-aluno sobre objetivos e metas; promove autonomia e responsabilidade',
+  'Elaboração de mural: construção coletiva de painel visual com sínteses; consolida e socializa aprendizagem',
+  'Palestra: apresentação por especialista externo; traz visão do mercado e amplia referências profissionais',
+  'Leitura de textos: leitura individual ou coletiva com mediação; desenvolve interpretação e análise crítica',
+].join('\n');
 
   var steps1=[['Analisando o P.O...',8],['Matriz pedagógica...',20],['Análise de complexidade...',32],['Distribuindo carga horária...',44],['Progressão pedagógica...',52]];
   var steps2=[['Gerando planos de aula...',60],['Situações de aprendizagem...',72],['Metodologias ativas...',82],['Auditoria pedagógica...',90],['Relatórios finais...',97]];
