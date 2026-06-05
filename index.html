@@ -555,33 +555,208 @@ function tk(){var i=document.getElementById('ak'),ic=document.getElementById('ei
 // ── WORD EXPORT ────────────────────────────────────
 async function gerarWord(){
   var btn=document.getElementById('bw');
-  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader"></i> Gerando...';
-  try{
+  btn.disabled=true;
+  btn.innerHTML='<i class="ti ti-loader"></i> Gerando Word...';
+  try {
+    // Load docx library
     if(!window.docx){
       await new Promise(function(res,rej){
         var s=document.createElement('script');
-        // Use a version known to work in browser with all enums
-        s.src='https://unpkg.com/docx@7.8.2/build/index.js';
-        s.onload=res;s.onerror=function(){
-          // fallback to different CDN
-          var s2=document.createElement('script');
-          s2.src='https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.js';
-          s2.onload=res;s2.onerror=rej;
-          document.head.appendChild(s2);
-        };
+        s.src='https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.js';
+        s.onload=res; s.onerror=rej;
         document.head.appendChild(s);
       });
     }
-    var D=window.docx;
-    // Verify key exports exist
-    if(!D||!D.Document){throw new Error('Biblioteca docx não carregou corretamente');}
-    var txt=document.getElementById('ob').textContent;
+    if(!window.docx||!window.docx.Document){
+      throw new Error('Biblioteca não carregou. Verifique sua conexão.');
+    }
+    var txt=document.getElementById('ob').textContent||'';
     var aulas=parsearAulas(txt);
-    if(!aulas.length){alert('Planos de aula não encontrados no texto.\n\nDica: certifique-se que a geração foi completa (Parte 2 incluída).');return;}
-    await gerarWordBrowser(aulas,D);
-  }catch(e){alert('Erro ao gerar Word: '+e.message+'\n\nStack: '+e.stack);}
-  btn.disabled=false;btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word';
+    if(aulas.length===0){
+      alert('Nenhum plano de aula encontrado.\n\nO formato ╔═══ AULA N ═══ não foi detectado no texto gerado. Isso acontece quando o Gemini não usou o formato padrão.\n\nUse o botão "Baixar .txt" para salvar o conteúdo.');
+      return;
+    }
+    await montarDocx(aulas);
+  } catch(e) {
+    console.error('Word error:', e);
+    alert('Erro ao gerar Word: ' + (e.message||String(e)));
+  }
+  btn.disabled=false;
+  btn.innerHTML='<i class="ti ti-file-word"></i> Baixar Word';
 }
+
+async function montarDocx(aulas){
+  var D = window.docx;
+  var children = [];
+
+  // Helper: paragraph
+  function p(text, opts){
+    opts = opts||{};
+    var run = new D.TextRun({
+      text: text||'',
+      bold: opts.bold||false,
+      size: opts.size||22,
+      font: 'Arial',
+      color: opts.color||'000000'
+    });
+    return new D.Paragraph({
+      children: [run],
+      alignment: opts.center ? 'center' : 'left',
+      spacing: { before: opts.before||40, after: opts.after||40 }
+    });
+  }
+
+  // Helper: simple table row with 2 cols
+  function row2(label, value, bgLabel){
+    return new D.TableRow({
+      children: [
+        new D.TableCell({
+          children: [p(label, {bold:true, size:20, color:'1F3864'})],
+          width: {size: 3000, type: 'dxa'},
+          shading: bgLabel ? {fill: bgLabel, type: 'clear'} : undefined,
+          margins: {top:80, bottom:80, left:120, right:120}
+        }),
+        new D.TableCell({
+          children: [p(value||'', {size:20})],
+          width: {size: 11400, type: 'dxa'},
+          margins: {top:80, bottom:80, left:120, right:120}
+        })
+      ]
+    });
+  }
+
+  // CAPA
+  children.push(p('PLANEJAMENTO PEDAGÓGICO SENAC', {bold:true, size:36, color:'1F3864', center:true, before:200, after:80}));
+  children.push(p(A.cn||'', {bold:true, size:28, color:'1F3864', center:true, before:0, after:60}));
+  children.push(p(A.sun||'', {size:24, color:'1F3864', center:true, before:0, after:200}));
+  children.push(p('Total de aulas: '+aulas.length, {size:22, center:true, before:0, after:200}));
+  children.push(p(''));
+
+  // PLANOS DE AULA
+  aulas.forEach(function(aula, idx){
+    // Page break before each lesson (except first)
+    if(idx > 0){
+      children.push(new D.Paragraph({
+        children: [new D.PageBreak()],
+        spacing: {before:0, after:0}
+      }));
+    }
+
+    // Lesson header
+    children.push(p('AULA '+(idx+1)+' de '+aulas.length+' — '+(aula.titulo||''), {
+      bold:true, size:28, color:'1F3864', before:120, after:80
+    }));
+    children.push(p(A.sun||'', {size:20, color:'5C5B58', before:0, after:160}));
+
+    // Info table
+    children.push(new D.Table({
+      width: {size: 14400, type: 'dxa'},
+      columnWidths: [3600, 3600, 3600, 3600],
+      rows: [
+        new D.TableRow({children:[
+          new D.TableCell({children:[p('Carga Horária',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p('Modalidade',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p('Indicadores',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p('Metodologia',{bold:true,size:20,color:'FFFFFF'})],shading:{fill:'1F3864',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}})
+        ]}),
+        new D.TableRow({children:[
+          new D.TableCell({children:[p(aula.ch||'4h',{size:20})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p(aula.modalidade||'Presencial',{size:20})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p(aula.indicadores||'',{size:20})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}}),
+          new D.TableCell({children:[p(aula.metodologia||'',{size:19})],shading:{fill:'F2F2F2',type:'clear'},margins:{top:80,bottom:80,left:120,right:120}})
+        ]})
+      ]
+    }));
+    children.push(p(''));
+
+    // Content sections
+    var secoes = [
+      ['Situação de Aprendizagem', aula.situacao],
+      ['Objetivo da Aula', aula.objetivo],
+      ['Conhecimentos', aula.conhecimentos],
+      ['Habilidades', aula.habilidades],
+      ['Atitudes', aula.atitudes],
+      ['Produto Esperado', aula.produto],
+      ['Evidências de Aprendizagem', aula.evidencias],
+      ['Critérios Observáveis', aula.criterios],
+      ['Instrumentos de Acompanhamento', aula.instrumentos],
+    ];
+    secoes.forEach(function(s){
+      if(s[1]){
+        children.push(new D.Table({
+          width:{size:14400,type:'dxa'},
+          columnWidths:[3200,11200],
+          rows:[row2(s[0],s[1],'D6DCE4')]
+        }));
+        children.push(p(''));
+      }
+    });
+
+    // Desenvolvimento
+    var dev = aula.desenvolvimento||{};
+    var devItems = [
+      ['Acolhimento (15 min)',dev.acolhimento],
+      ['Mobilização (20 min)',dev.mobilizacao],
+      ['Desenvolvimento',dev.desenvolvimento],
+      ['Prática',dev.pratica],
+      ['Sistematização (20 min)',dev.sistematizacao],
+      ['Encerramento (15 min)',dev.encerramento]
+    ].filter(function(d){return d[1];});
+    
+    if(devItems.length){
+      children.push(p('DESENVOLVIMENTO DA AULA', {bold:true, size:22, color:'1F3864', before:80, after:40}));
+      children.push(new D.Table({
+        width:{size:14400,type:'dxa'},
+        columnWidths:[3200,11200],
+        rows: devItems.map(function(d){return row2(d[0],d[1],'D6DCE4');})
+      }));
+      children.push(p(''));
+    }
+
+    // More sections
+    var secoes2 = [
+      ['Orientações ao Docente', aula.orientacoes],
+      ['Possíveis Dificuldades', aula.dificuldades],
+      ['Perguntas para Reflexão', aula.reflexao],
+      ['Checklist do Docente', aula.checklist],
+    ];
+    secoes2.forEach(function(s){
+      if(s[1]){
+        children.push(new D.Table({
+          width:{size:14400,type:'dxa'},
+          columnWidths:[3200,11200],
+          rows:[row2(s[0],s[1],'D6DCE4')]
+        }));
+        children.push(p(''));
+      }
+    });
+
+    children.push(p('─'.repeat(80), {color:'AAAAAA', size:16, before:40, after:40}));
+  });
+
+  // Build document
+  var doc = new D.Document({
+    sections:[{
+      properties:{
+        page:{
+          size:{width:16838, height:11906},
+          margin:{top:720, right:720, bottom:720, left:720}
+        }
+      },
+      children: children
+    }]
+  });
+
+  var blob = await D.Packer.toBlob(doc);
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var nm = (A.sun||'planejamento').replace(/[^\w\sÀ-ÿ]/g,'').replace(/\s+/g,'_').substring(0,50);
+  a.href = url;
+  a.download = 'Planejamento_'+nm+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.docx';
+  a.click();
+  setTimeout(function(){URL.revokeObjectURL(url);}, 3000);
+}
+
 
 function parsearAulas(txt){
   var aulas=[],blocos=txt.split(/╔[═]+/);
